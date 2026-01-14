@@ -8,6 +8,7 @@ import {
   selectWatchlistItems, 
   selectWatchlistLoading 
 } from "@/features/watchlist";
+import { StockLogo } from "@/components";
 import toast from "@/utils/toast";
 
 export default function Watchlist() {
@@ -56,7 +57,6 @@ export default function Watchlist() {
 
   return (
     <div className="space-y-6 text-gray-900 dark:text-gray-100">
-      {/* Page Header */}
       <div>
         <h1 className="text-2xl font-semibold">Watchlist</h1>
         <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -64,7 +64,6 @@ export default function Watchlist() {
         </p>
       </div>
 
-      {/* Empty State */}
       {watchlist.length === 0 ? (
         <div className="rounded-lg border border-dashed border-gray-300 dark:border-gray-700 p-8 text-center">
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
@@ -82,6 +81,7 @@ export default function Watchlist() {
           <table className="w-full text-sm">
             <thead className="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
               <tr>
+                <th className="px-4 py-3 text-left">Logo</th>
                 <th className="px-4 py-3 text-left">Symbol</th>
                 <th className="px-4 py-3 text-left">Company</th>
                 <th className="px-4 py-3 text-right">Price</th>
@@ -103,6 +103,14 @@ export default function Watchlist() {
                     className="border-t border-gray-200 dark:border-gray-800
                                hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
                   >
+                    <td className="px-4 py-3">
+                      <StockLogo 
+                        src={stock.logoUrl}
+                        symbol={stock.symbol}
+                        alt={stock.companyName}
+                        size="sm"
+                      />
+                    </td>
                     <td 
                       className="px-4 py-3 font-medium cursor-pointer hover:text-blue-600"
                       onClick={() => handleRowClick(stock._id)}
@@ -158,3 +166,15 @@ export default function Watchlist() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+

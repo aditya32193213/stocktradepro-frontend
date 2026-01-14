@@ -1,6 +1,3 @@
-// ===============================================
-// features/dashboard/dashboardSelectors.js
-// ===============================================
 import { createSelector } from '@reduxjs/toolkit';
 
 const selectDashboardState = (state) => state.dashboard;
@@ -10,6 +7,10 @@ export const selectDashboardSummary = createSelector(
   (dashboard) => ({
     balance: dashboard.balance,
     netInvestedAmount: dashboard.netInvestedAmount,
+    totalPortfolioValue: dashboard.totalPortfolioValue,
+    totalProfitLoss: dashboard.totalProfitLoss,
+    watchlistPreview: dashboard.watchlistPreview,
+    
     holdingsCount: dashboard.holdingsCount,
     watchlistCount: dashboard.watchlistCount,
   })

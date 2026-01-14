@@ -39,7 +39,6 @@ const watchlistSlice = createSlice({
       })
       .addCase(addToWatchlist.fulfilled, (state) => {
         state.loading = false;
-        // ✅ Items are refetched automatically in the thunk
       })
       .addCase(addToWatchlist.rejected, (state, action) => {
         state.loading = false;
@@ -52,7 +51,6 @@ const watchlistSlice = createSlice({
       })
       .addCase(removeFromWatchlist.fulfilled, (state, action) => {
         state.loading = false;
-        // ✅ Remove item from state by watchlist ID (not stock ID)
         state.items = state.items.filter(
           (item) => item._id !== action.payload
         );

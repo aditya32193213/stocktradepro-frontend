@@ -1,0 +1,30 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 64 64"
+  width="64"
+  height="64"
+>
+  <defs>
+    <!-- Emoji-style gradient -->
+    <linearGradient id="boltGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF176"/>
+      <stop offset="50%" stop-color="#FFEB3B"/>
+      <stop offset="100%" stop-color="#FBC02D"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Lightning bolt -->
+  <path
+    d="M36 2
+       L10 36
+       H28
+       L22 62
+       L54 26
+       H36
+       Z"
+    fill="url(#boltGradient)"
+    stroke="#F57F17"
+    stroke-width="2"
+    stroke-linejoin="round"
+  />
+</svg>

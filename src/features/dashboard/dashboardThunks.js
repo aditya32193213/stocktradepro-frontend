@@ -1,6 +1,3 @@
-// ===============================================
-// features/dashboard/dashboardThunks.js
-// ===============================================
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '@/services/axiosInstance';
 

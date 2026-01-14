@@ -4,7 +4,6 @@ import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import ThemeToggle from "@/components/common/ThemeToggle";
 import { loginUser } from "@/features/auth";
 import toast from "@/utils/toast";
 
@@ -57,7 +56,6 @@ export default function Login() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
       {/* Theme Toggle */}
       <div className="flex justify-end p-4">
-        <ThemeToggle />
       </div>
 
       <div className="flex items-center justify-center px-4">

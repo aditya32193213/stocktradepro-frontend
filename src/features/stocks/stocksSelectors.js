@@ -12,6 +12,11 @@ export const selectStocksLoading = createSelector(
   (stocks) => stocks.loading
 );
 
+export const selectStocksError = createSelector(
+  [selectStocksState],
+  (stocks) => stocks.error
+);
+
 export const selectStockSearch = createSelector(
   [selectStocksState],
   (stocks) => stocks.search
@@ -30,3 +35,12 @@ export const selectPaginationMeta = createSelector(
     totalRecords: stocks.totalRecords,
   })
 );
+
+export const selectStockSectors = createSelector(
+  [selectStocksState],
+  (stocks) => stocks.sectors || []
+);
+
+
+
+

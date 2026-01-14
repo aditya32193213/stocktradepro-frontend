@@ -1,6 +1,3 @@
-// ===============================================
-// features/portfolio/portfolioSelectors.js
-// ===============================================
 import { createSelector } from '@reduxjs/toolkit';
 
 const selectPortfolioState = (state) => state.portfolio;

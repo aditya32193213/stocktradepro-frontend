@@ -1,3 +1,4 @@
+// src/pages/Portfolio.jsx
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +10,7 @@ import {
   selectPortfolioSummary,
   selectPortfolioLoading,
 } from "@/features/portfolio";
+import { StockLogo } from "@/components";
 import { DashboardSkeleton } from "@/components/common/SkeletonLoader";
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D'];
@@ -29,7 +31,6 @@ export default function Portfolio() {
     return <DashboardSkeleton />;
   }
 
-  // Prepare pie chart data
   const chartData = holdings.map((holding, index) => ({
     name: holding.stock.symbol,
     value: holding.currentValue,
@@ -192,21 +193,12 @@ export default function Portfolio() {
                   >
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
-                        {holding.stock.logoUrl ? (
-                          <img
-                            src={holding.stock.logoUrl}
-                            alt={holding.stock.symbol}
-                            className="w-8 h-8 rounded-full object-cover"
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src = `https://via.placeholder.com/32x32.png?text=${holding.stock.symbol.charAt(0)}`;
-                            }}
-                          />
-                        ) : (
-                          <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold text-xs">
-                            {holding.stock.symbol.charAt(0)}
-                          </div>
-                        )}
+                        <StockLogo
+                          src={holding.stock.logoUrl}
+                          symbol={holding.stock.symbol}
+                          alt={holding.stock.companyName}
+                          size="sm"
+                        />
                         <div>
                           <div className="font-medium">
                             {holding.stock.symbol}

@@ -1,8 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { loginUser, registerUser, fetchUserProfile, updateUserProfile } from './authThunks';
 
+// Helper to safely parse user from localStorage
+const getUserFromStorage = () => {
+  try {
+    const userStr = localStorage.getItem('user');
+    return userStr ? JSON.parse(userStr) : null;
+  } catch (e) {
+    return null;
+  }
+};
+
 const initialState = {
-  user: null,
+  user: getUserFromStorage(),
   token: localStorage.getItem('token') || null, 
   balance: 0,
   loading: false,
@@ -66,8 +76,14 @@ const authSlice = createSlice({
       .addCase(fetchUserProfile.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchUserProfile.fulfilled, (state) => {
+      .addCase(fetchUserProfile.fulfilled, (state, action) => {
         state.loading = false;
+        // Update user state if fetch is successful
+        if (action.payload.user) {
+          state.user = action.payload.user;
+          // Keep localStorage in sync
+          localStorage.setItem('user', JSON.stringify(action.payload.user));
+        }
       })
       .addCase(fetchUserProfile.rejected, (state, action) => {
         state.loading = false;
@@ -81,6 +97,8 @@ const authSlice = createSlice({
       .addCase(updateUserProfile.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
+        // Keep localStorage in sync
+        localStorage.setItem('user', JSON.stringify(action.payload));
       })
       .addCase(updateUserProfile.rejected, (state, action) => {
         state.loading = false;

@@ -1,6 +1,3 @@
-// ===============================================
-// features/portfolio/index.js
-// ===============================================
 export { default } from './portfolioSlice';
 export * from './portfolioSlice';
 export * from './portfolioThunks';

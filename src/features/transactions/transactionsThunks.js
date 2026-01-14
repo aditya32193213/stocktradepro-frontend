@@ -6,11 +6,12 @@ import axiosInstance from '@/services/axiosInstance';
  */
 export const buyStock = createAsyncThunk(
   'transactions/buy',
-  async ({ stockId, quantity }, { rejectWithValue }) => {
+  async ({ stockId, quantity, notes }, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.post('/transactions/buy', {
         stockId,
         quantity,
+        notes, 
       });
       return data;
     } catch (err) {
@@ -26,12 +27,12 @@ export const buyStock = createAsyncThunk(
  */
 export const sellStock = createAsyncThunk(
   'transactions/sell',
-  async ({ stockId, quantity }, { rejectWithValue }) => {
+  async ({ stockId, quantity, notes }, { rejectWithValue }) => {
     try {
-      
       const { data } = await axiosInstance.post('/transactions/sell', {
         stockId,
         quantity,
+        notes, 
       });
       return data;
     } catch (err) {
@@ -44,13 +45,12 @@ export const sellStock = createAsyncThunk(
 
 /**
  * FETCH transaction history with filters
- * params: { page, limit, type, stockId, fromDate, toDate }
+ * params: { page, limit, type, stockId, fromDate, toDate, search }
  */
 export const fetchTransactions = createAsyncThunk(
   'transactions/fetchAll',
   async (params = {}, { rejectWithValue }) => {
     try {
-      
       const { data } = await axiosInstance.get('/transactions', { params });
       return data;
     } catch (err) {
@@ -68,7 +68,6 @@ export const exportTransactionsPDF = createAsyncThunk(
   'transactions/exportPdf',
   async (params = {}, { rejectWithValue }) => {
     try {
-      
       const response = await axiosInstance.get('/transactions/export/pdf', {
         params,
         responseType: 'blob',
@@ -100,7 +99,6 @@ export const exportTransactionsCSV = createAsyncThunk(
   'transactions/exportCsv',
   async (params = {}, { rejectWithValue }) => {
     try {
-      
       const response = await axiosInstance.get('/transactions/export/csv', {
         params,
         responseType: 'blob',

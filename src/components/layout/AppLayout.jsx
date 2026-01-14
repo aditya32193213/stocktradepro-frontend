@@ -17,6 +17,7 @@ const AppLayout = () => {
         <main className="flex-1 p-6 overflow-auto">
           <Outlet />
         </main>
+
       </div>
     </div>
   );

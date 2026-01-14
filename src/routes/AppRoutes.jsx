@@ -1,7 +1,12 @@
-import { Suspense } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Suspense, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectIsAuthenticated, selectAuthUser, fetchUserProfile } from "@/features/auth";
+
 import AppLayout from "@/components/layout/AppLayout";
+import PublicLayout from "@/components/layout/PublicLayout";
 import ProtectedRoute from "@/components/common/ProtectedRoute";
+import GuestRoute from "@/components/common/GuestRoute";
 
 import {
   Landing,
@@ -15,6 +20,8 @@ import {
   Profile,
   About,
   Watchlist,
+  NotFound,
+  FAQ
 } from "@/pages";
 
 const PageLoader = () => (
@@ -24,16 +31,36 @@ const PageLoader = () => (
 );
 
 export default function AppRoutes() {
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const user = useSelector(selectAuthUser);
+
+  // Fetch user profile on reload if token exists
+  useEffect(() => {
+    if (isAuthenticated && !user) {
+      dispatch(fetchUserProfile());
+    }
+  }, [dispatch, isAuthenticated, user]);
+
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
-        {/* Public routes */}
-        <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/about" element={<About />} />
+        
+        {/* Public Layout (Header + Footer) */}
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<Landing />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="*" element={<NotFound />} />
 
-        {/* Protected / App layout routes */}
+          {/* ✅ WRAP LOGIN & REGISTER IN GUEST ROUTE */}
+          <Route element={<GuestRoute />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
+        </Route>
+
+        {/* Protected App Layout (Sidebar + Header) */}
         <Route
           element={
             <ProtectedRoute>
@@ -50,8 +77,6 @@ export default function AppRoutes() {
           <Route path="/profile" element={<Profile />} />
         </Route>
 
-        {/* Fallback */}
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </Suspense>
   );

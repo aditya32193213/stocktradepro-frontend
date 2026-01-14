@@ -12,6 +12,7 @@ export const loginUser = createAsyncThunk(
       
       if (data.token) {
         localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
       }
       
       return {
@@ -91,6 +92,11 @@ export const updateUserProfile = createAsyncThunk(
 export const logoutUser = createAsyncThunk(
   'auth/logoutUser',
   async (_, { dispatch }) => {
+    // ✅ FIX: Remove token and user data immediately
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
+    // Dynamic imports to avoid circular dependencies
     const { logout } = await import('./authSlice');
     const { resetWatchlist } = await import('@/features/watchlist');
     const { resetTransactions } = await import('@/features/transactions');
@@ -98,15 +104,14 @@ export const logoutUser = createAsyncThunk(
     const { resetPortfolio } = await import('@/features/portfolio');
     const { resetStocks } = await import('@/features/stocks');
 
+    // Dispatch reset actions
     dispatch(logout());
     dispatch(resetWatchlist());
     dispatch(resetTransactions());
     dispatch(resetDashboard());
     dispatch(resetPortfolio());
     dispatch(resetStocks());
-
-    localStorage.removeItem('token');
-
+    
     return true;
   }
 );

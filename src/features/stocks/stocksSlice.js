@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchStocks, fetchStockById } from './stocksThunks';
+import { fetchStocks, fetchStockById, fetchSectors } from './stocksThunks'; 
 
 const initialState = {
   list: [],
+  sectors: [], 
   selectedStock: null,
-
   loading: false,
   error: null,
 
@@ -13,7 +13,7 @@ const initialState = {
   totalPages: 1,
   totalRecords: 0,
 
-  // UI state (controlled via Redux)
+  // UI state
   search: '',
 };
 
@@ -31,14 +31,27 @@ const stocksSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch stocks list
+      // --- Fetch Stocks List ---
       .addCase(fetchStocks.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(fetchStocks.fulfilled, (state, action) => {
         state.loading = false;
-        state.list = action.payload.data;
+        
+        // Handle Infinite Scroll vs Search/Filter
+        const requestedPage = action.meta.arg?.page || 1;
+
+        if (requestedPage === 1) {
+          state.list = action.payload.data;
+        } else {
+          // Remove duplicates and append
+          const existingIds = new Set(state.list.map(s => s._id));
+          const newStocks = action.payload.data.filter(s => !existingIds.has(s._id));
+          state.list = [...state.list, ...newStocks];
+        }
+
+        // Update Metadata
         state.page = action.payload.page;
         state.totalPages = action.payload.totalPages;
         state.totalRecords = action.payload.totalRecords;
@@ -48,7 +61,12 @@ const stocksSlice = createSlice({
         state.error = action.payload;
       })
 
-      // Fetch single stock
+      // --- Fetch Sectors ---
+      .addCase(fetchSectors.fulfilled, (state, action) => {
+        state.sectors = action.payload;
+      })
+
+      // --- Fetch Single Stock ---
       .addCase(fetchStockById.pending, (state) => {
         state.loading = true;
       })
@@ -63,10 +81,5 @@ const stocksSlice = createSlice({
   },
 });
 
-export const {
-  setSearchQuery,
-  clearSelectedStock,
-  resetStocks,
-} = stocksSlice.actions;
-
+export const { setSearchQuery, clearSelectedStock, resetStocks } = stocksSlice.actions;
 export default stocksSlice.reducer;

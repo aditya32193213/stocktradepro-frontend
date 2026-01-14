@@ -11,3 +11,5 @@ export const Transactions = lazy(() => import("./Transactions"));
 export const Watchlist = lazy(() => import("./Watchlist"));
 export const Profile = lazy(() => import("./Profile"));
 export const About = lazy(() => import("./About"));
+export const NotFound = lazy(() => import("./NotFound"));
+export const FAQ = lazy(() => import("./FAQ"));

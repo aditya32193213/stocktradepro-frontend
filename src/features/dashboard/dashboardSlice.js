@@ -1,14 +1,14 @@
-// ===============================================
-// features/dashboard/dashboardSlice.js
-// ===============================================
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchDashboardSummary } from './dashboardThunks';
 
 const initialState = {
   balance: 0,
   netInvestedAmount: 0,
+  totalPortfolioValue: 0, 
+  totalProfitLoss: 0,     
   holdingsCount: 0,
   watchlistCount: 0,
+  watchlistPreview: [],   
   loading: false,
   error: null,
 };
@@ -29,8 +29,11 @@ const dashboardSlice = createSlice({
         state.loading = false;
         state.balance = action.payload.balance;
         state.netInvestedAmount = action.payload.netInvestedAmount;
+        state.totalPortfolioValue = action.payload.totalPortfolioValue; 
+        state.totalProfitLoss = action.payload.totalProfitLoss;         
         state.holdingsCount = action.payload.holdingsCount;
         state.watchlistCount = action.payload.watchlistCount;
+        state.watchlistPreview = action.payload.watchlistPreview;      
       })
       .addCase(fetchDashboardSummary.rejected, (state, action) => {
         state.loading = false;
