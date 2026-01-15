@@ -1,3 +1,20 @@
+/**
+ * File: watchlistSlice.js
+ * Purpose:
+ * - Redux slice for Watchlist feature
+ *
+ * Flow:
+ * - Handles fetch, add, and remove watchlist actions
+ * - Manages loading and error states
+ *
+ * Key Responsibilities:
+ * - Store watchlist items
+ * - Sync UI state with backend
+ *
+ * Redux:
+ * - Uses createSlice + extraReducers
+ */
+
 import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchWatchlist,

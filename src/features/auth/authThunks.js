@@ -1,5 +1,22 @@
+/**
+ * File: authThunks.js
+ * Purpose:
+ * - Async Redux thunks for authentication workflows
+ *
+ * Flow:
+ * - Login and store JWT + user data
+ * - Register new users
+ * - Fetch and update user profile
+ * - Perform full client-side logout cleanup
+ *
+ * Key Responsibilities:
+ * - Handle auth API communication
+ * - Normalize error handling
+ * - Reset all feature states on logout
+ */
+
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axiosInstance from '@/services/axiosInstance';
+import { axiosInstance } from "@/services"
 
 /**
  * LOGIN USER
@@ -98,11 +115,14 @@ export const logoutUser = createAsyncThunk(
 
     // Dynamic imports to avoid circular dependencies
     const { logout } = await import('./authSlice');
-    const { resetWatchlist } = await import('@/features/watchlist');
-    const { resetTransactions } = await import('@/features/transactions');
-    const { resetDashboard } = await import('@/features/dashboard');
-    const { resetPortfolio } = await import('@/features/portfolio');
-    const { resetStocks } = await import('@/features/stocks');
+
+    const { 
+      resetWatchlist, 
+      resetTransactions, 
+      resetDashboard, 
+      resetPortfolio, 
+      resetStocks 
+    } = await import('@/features');
 
     // Dispatch reset actions
     dispatch(logout());

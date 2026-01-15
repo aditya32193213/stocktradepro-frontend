@@ -1,5 +1,18 @@
+/**
+ * File: dashboardThunks.js
+ * Purpose:
+ * - Async Redux thunk for dashboard summary
+ *
+ * Flow:
+ * - Fetches aggregated dashboard metrics from backend
+ *
+ * Key Responsibilities:
+ * - Centralize dashboard API communication
+ * - Provide clean async abstraction for UI
+ */
+
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axiosInstance from '@/services/axiosInstance';
+import { axiosInstance } from '@/services';
 
 /**
  * Fetch dashboard summary

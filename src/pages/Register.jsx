@@ -1,10 +1,30 @@
+/**
+ * File: Register.jsx
+ * Purpose:
+ * - New user registration page
+ *
+ * Flow:
+ * - Validates user input using Yup schema
+ * - Tracks password strength in real-time
+ * - Dispatches registerUser Redux thunk
+ * - Redirects to login after successful registration
+ *
+ * Key Responsibilities:
+ * - Enforce strong password & PAN validation
+ * - Improve UX with visual feedback
+ * - Prevent invalid registrations
+ *
+ * Access:
+ * - Public (unauthenticated users)
+ */
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "@/features/auth";
-import toast from "@/utils/toast";
+import { useAppDispatch, useAppSelector } from "@/core";
+import { registerUser } from "@/features";
+import { showSuccess, showError, showLoading, dismissToast } from "@/utils";
 import { FaUser, FaEnvelope, FaPhone, FaIdCard, FaLock, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { useState, useEffect } from "react";
 
@@ -23,9 +43,9 @@ const schema = yup.object({
 });
 
 export default function Register() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { loading } = useSelector((state) => state.auth);
+  const { loading } = useAppSelector((state) => state.auth);
   const [passwordStrength, setPasswordStrength] = useState(0);
   const [showPassword, setShowPassword] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
@@ -52,15 +72,15 @@ export default function Register() {
   }, [password]);
 
   const onSubmit = async (data) => {
-    const toastId = toast.loading("Creating account...");
+    const toastId = showLoading("Creating account...");
     const result = await dispatch(registerUser(data));
-    toast.dismiss(toastId);
+    dismissToast(toastId);
     
     if (registerUser.fulfilled.match(result)) {
-      toast.success("Account created! Please login.");
+      showSuccess("Account created! Please login.");
       navigate("/login");
     } else {
-      toast.error(typeof result.payload === "string" ? result.payload : "Registration failed");
+      showError(typeof result.payload === "string" ? result.payload : "Registration failed");
     }
   };
 

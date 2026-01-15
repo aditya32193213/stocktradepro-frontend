@@ -1,3 +1,18 @@
+/**
+ * File: InfoModal.jsx
+ * Purpose:
+ * - Reusable modal for legal and informational content
+ *
+ * Flow:
+ * - Displays dynamic content based on `type` prop
+ * - Supports Terms, Privacy Policy, and Cookie Policy
+ * - Closes via backdrop or close button
+ *
+ * Key Responsibilities:
+ * - Legal compliance UI
+ * - Centralized informational modals
+ */
+
 import { FaTimes } from "react-icons/fa";
 
 export default function InfoModal({ type, onClose }) {

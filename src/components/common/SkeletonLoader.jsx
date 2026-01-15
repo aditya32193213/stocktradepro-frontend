@@ -1,5 +1,15 @@
 /**
- * Reusable Skeleton Loading Components
+ * File: SkeletonLoader.jsx
+ * Purpose:
+ * - Reusable skeleton loading components
+ *
+ * Flow:
+ * - Displays placeholder UI during data fetching
+ * - Supports tables, cards, dashboard, and stock detail layouts
+ *
+ * Key Responsibilities:
+ * - Improve perceived performance
+ * - Maintain layout stability while loading
  */
 
 export function TableSkeleton({ rows = 5, columns = 5 }) {

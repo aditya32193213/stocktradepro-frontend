@@ -1,5 +1,21 @@
+/**
+ * File: transactionsThunks.js
+ * Purpose:
+ * - Async Redux thunks for transaction operations
+ *
+ * Flow:
+ * - Buy and sell stocks
+ * - Fetch transaction history with filters
+ * - Export transactions to PDF and CSV
+ *
+ * Key Responsibilities:
+ * - Communicate with backend transaction APIs
+ * - Handle file downloads (PDF / CSV)
+ * - Normalize error handling
+ */
+
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axiosInstance from '@/services/axiosInstance';
+import { axiosInstance } from '@/services';
 
 /**
  * BUY stock

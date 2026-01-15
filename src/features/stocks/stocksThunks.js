@@ -1,5 +1,20 @@
+/**
+ * File: stocksThunks.js
+ * Purpose:
+ * - Async Redux thunks for stock-related APIs
+ *
+ * Flow:
+ * - Fetch stock listings with search and filters
+ * - Fetch available stock sectors
+ * - Fetch single stock details by ID
+ *
+ * Key Responsibilities:
+ * - API communication for stock data
+ * - Error handling abstraction
+ */
+
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axiosInstance from '@/services/axiosInstance';
+import { axiosInstance } from '@/services';
 
 /**
  * Fetch stocks (search, pagination, filters)

@@ -1,3 +1,17 @@
+/**
+ * File: toast.js
+ * Purpose:
+ * - Centralized toast notification utilities
+ *
+ * Flow:
+ * - Wraps react-hot-toast methods
+ * - Provides consistent success, error, loading, and promise-based toasts
+ *
+ * Why this file exists:
+ * - Prevents repeated toast logic across components
+ * - Makes notification handling uniform and reusable
+ */
+
 import toast from 'react-hot-toast';
 
 /**
@@ -26,12 +40,4 @@ export const showPromise = (promise, messages) => {
     success: messages.success || 'Success!',
     error: messages.error || 'Something went wrong',
   });
-};
-
-export default {
-  success: showSuccess,
-  error: showError,
-  loading: showLoading,
-  dismiss: dismissToast,
-  promise: showPromise,
 };

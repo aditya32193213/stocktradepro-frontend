@@ -1,3 +1,17 @@
+/**
+ * File: axiosInstance.js
+ * Purpose:
+ * - Centralized Axios configuration for API communication
+ *
+ * Flow:
+ * - Creates an Axios instance with base URL and default headers
+ * - Automatically attaches JWT token to every request
+ * - Handles common API errors globally
+ *
+ * Why this file exists:
+ * - Prevents duplication of Axios setup
+ * - Ensures consistent authentication and error handling
+ */
 import axios from 'axios';
 
 const axiosInstance = axios.create({

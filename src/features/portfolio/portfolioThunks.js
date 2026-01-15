@@ -1,5 +1,18 @@
+/**
+ * File: portfolioThunks.js
+ * Purpose:
+ * - Async Redux thunk for portfolio API operations
+ *
+ * Flow:
+ * - Fetches user portfolio including holdings and P&L
+ *
+ * Key Responsibilities:
+ * - Communicate with backend portfolio endpoint
+ * - Normalize API error handling
+ */
+
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axiosInstance from '@/services/axiosInstance';
+import { axiosInstance } from '@/services';
 
 /**
  * Fetch user's portfolio with holdings and P&L

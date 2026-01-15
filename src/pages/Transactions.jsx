@@ -1,5 +1,24 @@
+/**
+ * File: Transactions.jsx
+ * Purpose:
+ * - Shows complete transaction history
+ *
+ * Flow:
+ * - Fetches paginated transactions
+ * - Supports filtering, search, and date range
+ * - Allows export to PDF and CSV
+ *
+ * Key Responsibilities:
+ * - Trade history tracking
+ * - Data export functionality
+ * - Analytics summary
+ *
+ * Access:
+ * - Protected
+ */
+
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/core";
 import { FaFilePdf, FaFileCsv, FaFilter, FaSearch, FaStickyNote, FaHistory, FaDownload, FaTimes, FaChevronLeft, FaChevronRight, FaShoppingCart, FaChartLine } from "react-icons/fa"; 
 import { 
   fetchTransactions, 
@@ -7,13 +26,13 @@ import {
   exportTransactionsCSV,
   selectTransactions, 
   selectTransactionsLoading 
-} from "@/features/transactions";
+} from "@/features";
 import { StockLogo } from "@/components";
 
 export default function Transactions() {
-  const dispatch = useDispatch();
-  const transactions = useSelector(selectTransactions);
-  const loading = useSelector(selectTransactionsLoading);
+  const dispatch = useAppDispatch();
+  const transactions = useAppSelector(selectTransactions);
+  const loading = useAppSelector(selectTransactionsLoading);
 
   const [filter, setFilter] = useState("ALL");
   const [search, setSearch] = useState(""); 

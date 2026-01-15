@@ -1,18 +1,33 @@
+/**
+ * File: Header.jsx
+ * Purpose:
+ * - Top navigation bar for both public and authenticated users
+ *
+ * Flow:
+ * - Shows public navigation when logged out
+ * - Displays user dropdown, theme toggle, and logout when logged in
+ * - Handles outside-click dropdown dismissal
+ *
+ * Key Responsibilities:
+ * - Primary navigation
+ * - User account access
+ * - Session logout handling
+ */
+
 import { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/core";
 import { useNavigate } from "react-router-dom";
-import { logoutUser, selectAuthUser, selectIsAuthenticated } from "@/features/auth";
-import ThemeToggle from "@/components/common/ThemeToggle";
-import InfoModal from "@/components/common/InfoModal"; 
+import { logoutUser, selectAuthUser, selectIsAuthenticated } from "@/features";
+import { ThemeToggle, InfoModal } from "@/components/common"; 
 import { FaUser, FaSignOutAlt, FaChevronDown, FaShieldAlt, FaCookieBite, FaQuestionCircle, FaFileContract, FaBolt } from "react-icons/fa";
-import toast from "@/utils/toast";
+import { showLoading, showSuccess, dismissToast } from "@/utils";
 
 const Header = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   
-  const user = useSelector(selectAuthUser);
-  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const user = useAppSelector(selectAuthUser);
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
   
   const [modalType, setModalType] = useState(null); 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -30,10 +45,10 @@ const Header = () => {
 
   const handleLogout = async () => {
     setIsDropdownOpen(false);
-    const toastId = toast.loading("Logging out...");
+    const toastId = showLoading("Logging out...");
     await dispatch(logoutUser());
-    toast.dismiss(toastId);
-    toast.success("Logged out successfully");
+    dismissToast(toastId);
+    showSuccess("Logged out successfully");
     navigate("/login");
   };
 
@@ -93,7 +108,7 @@ const Header = () => {
               </button>
 
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-3 w-64 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 py-2 animate-in fade-in slide-in-from-top-2 duration-200 z-50 overflow-hidden">
+                <div data-testid="user-dropdown" className="absolute right-0 mt-3 w-64 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 py-2 animate-in fade-in slide-in-from-top-2 duration-200 z-50 overflow-hidden">
                   {/* User Info Header */}
                   <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20">
                     <p className="text-sm font-bold text-gray-900 dark:text-white">{user?.name || 'User'}</p>

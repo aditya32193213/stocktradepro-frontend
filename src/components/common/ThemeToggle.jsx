@@ -1,5 +1,19 @@
+/**
+ * File: ThemeToggle.jsx
+ * Purpose:
+ * - Toggle between light and dark themes
+ *
+ * Flow:
+ * - Reads theme from ThemeContext
+ * - Toggles theme state on user interaction
+ *
+ * Key Responsibilities:
+ * - Improve accessibility and UX
+ * - Persist theme preference across sessions
+ */
+
 import { FaMoon, FaSun } from "react-icons/fa";
-import { useTheme } from "@/app/context/ThemeContext";
+import { useTheme } from "@/core";
 
 const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();

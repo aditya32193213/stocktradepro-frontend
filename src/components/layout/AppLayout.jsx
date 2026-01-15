@@ -1,6 +1,23 @@
+/**
+ * File: AppLayout.jsx
+ * Purpose:
+ * - Main application layout for authenticated users
+ *
+ * Flow:
+ * - Renders Sidebar and Header
+ * - Displays protected route content via <Outlet />
+ *
+ * Key Responsibilities:
+ * - Provide consistent layout for dashboard pages
+ * - Separate layout concerns from page logic
+ *
+ * Access:
+ * - Used only inside ProtectedRoute
+ */
+
 import { Outlet } from "react-router-dom";
-import Header from "@/components/layout/Header";
-import Sidebar from "@/components/layout/Sidebar";
+import Header from "./Header";
+import Sidebar from "./Sidebar";
 
 const AppLayout = () => {
   return (

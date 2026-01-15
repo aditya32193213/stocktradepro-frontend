@@ -1,3 +1,18 @@
+/**
+ * File: StockChart.jsx
+ * Purpose:
+ * - Visualizes live stock price trends
+ *
+ * Flow:
+ * - Transforms raw price data for Recharts
+ * - Renders responsive area chart
+ * - Handles empty or missing data gracefully
+ *
+ * Key Responsibilities:
+ * - Stock price visualization
+ * - Improve trading decision UX
+ */
+
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 

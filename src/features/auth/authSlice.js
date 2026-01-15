@@ -1,3 +1,22 @@
+/**
+ * File: authSlice.js
+ * Purpose:
+ * - Redux slice responsible for authentication state
+ *
+ * Flow:
+ * - Initializes auth state from localStorage
+ * - Handles login, registration, profile fetch, and updates
+ * - Manages logout and session restoration
+ *
+ * Key Responsibilities:
+ * - Maintain authenticated user state
+ * - Sync auth data with localStorage
+ * - Track loading and error states
+ *
+ * Security:
+ * - JWT token stored in localStorage
+ */
+
 import { createSlice } from '@reduxjs/toolkit';
 import { loginUser, registerUser, fetchUserProfile, updateUserProfile } from './authThunks';
 

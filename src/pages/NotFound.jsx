@@ -1,3 +1,20 @@
+/**
+ * File: NotFound.jsx
+ * Purpose:
+ * - 404 error page for unmatched routes
+ *
+ * Flow:
+ * - Displays animated error UI
+ * - Allows navigation back to home
+ *
+ * Key Responsibilities:
+ * - Improve UX for invalid routes
+ * - Maintain visual consistency with app theme
+ *
+ * Access:
+ * - Public
+ */
+
 import { useNavigate } from "react-router-dom";
 import { FaHome, FaExclamationTriangle, FaSearch } from "react-icons/fa";
 import { useState, useEffect } from "react";

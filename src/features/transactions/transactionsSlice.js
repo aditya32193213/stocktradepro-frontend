@@ -1,3 +1,20 @@
+/**
+ * File: transactionsSlice.js
+ * Purpose:
+ * - Redux slice for managing transactions state
+ *
+ * Flow:
+ * - Handles buy, sell, fetch, and export actions
+ * - Stores paginated transaction history
+ *
+ * Key Responsibilities:
+ * - Maintain transaction list and metadata
+ * - Track loading and error states
+ *
+ * Redux:
+ * - Built using createSlice with async thunks
+ */
+
 import { createSlice } from '@reduxjs/toolkit';
 import {
   buyStock,

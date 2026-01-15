@@ -1,3 +1,17 @@
+/**
+ * File: portfolioSelectors.js
+ * Purpose:
+ * - Memoized selectors for Portfolio state
+ *
+ * Flow:
+ * - Selects holdings, summary, and loading status
+ * - Uses reselect to prevent unnecessary recalculations
+ *
+ * Key Responsibilities:
+ * - Improve rendering performance
+ * - Provide clean access to portfolio data for UI
+ */
+
 import { createSelector } from '@reduxjs/toolkit';
 
 const selectPortfolioState = (state) => state.portfolio;

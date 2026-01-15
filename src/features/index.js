@@ -1,6 +1,16 @@
-// ================================================
-// Features Barrel Export (Redux Slices)
-// ================================================
+/**
+ * File: features/index.js
+ * Purpose:
+ * - Barrel export for all Redux feature modules
+ *
+ * Flow:
+ * - Re-exports slices, thunks, and selectors
+ * - Enables simplified imports across the app
+ *
+ * Key Responsibilities:
+ * - Maintain clean Redux architecture
+ * - Reduce import verbosity
+ */
 
 // Auth
 export * from './auth';

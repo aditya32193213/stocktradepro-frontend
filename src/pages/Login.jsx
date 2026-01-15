@@ -1,11 +1,30 @@
+/**
+ * File: Login.jsx
+ * Purpose:
+ * - Handles user authentication (login)
+ *
+ * Flow:
+ * - Validates credentials using react-hook-form + Yup
+ * - Dispatches loginUser Redux thunk
+ * - Stores JWT on success and redirects to dashboard
+ *
+ * Key Responsibilities:
+ * - Secure login experience
+ * - Client-side validation
+ * - User feedback via toast notifications
+ *
+ * Access:
+ * - Guest only (redirects authenticated users)
+ */
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/core";
 import { useEffect, useState } from "react";
-import { loginUser } from "@/features/auth";
-import toast from "@/utils/toast";
+import { loginUser } from "@/features";
+import { showSuccess, showError, showLoading, dismissToast } from "@/utils";
 import { FaEnvelope, FaLock, FaChartLine, FaShieldAlt, FaArrowRight, FaEye, FaEyeSlash } from "react-icons/fa";
 
 // Validation Schema
@@ -15,9 +34,9 @@ const schema = yup.object({
 });
 
 export default function Login() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { loading, isAuthenticated } = useSelector((state) => state.auth);
+  const { loading, isAuthenticated } = useAppSelector((state) => state.auth);
   const [showPassword, setShowPassword] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -45,22 +64,22 @@ export default function Login() {
   }, []);
 
   const onSubmit = async (data) => {
-    const toastId = toast.loading("Logging in...");
+    const toastId = showLoading("Logging in...");
     
     try {
       const result = await dispatch(loginUser(data));
       
-      toast.dismiss(toastId);
+      dismissToast(toastId);
       
       if (loginUser.fulfilled.match(result)) {
-        toast.success("Welcome back!");
+        showSuccess(`Welcome back, ${result.payload.user.name}!`);
         setTimeout(() => navigate("/dashboard"), 500);
       } else {
-        toast.error(result.payload || "Login failed");
+        showError(result.payload || "Login failed");
       }
     } catch (error) {
-      toast.dismiss(toastId);
-      toast.error("An unexpected error occurred");
+      dismissToast(toastId);
+      showError("An unexpected error occurred");
     }
   };
 
@@ -234,6 +253,7 @@ export default function Login() {
                 <button
                   type="submit"
                   disabled={loading}
+                  data-testid="login-submit-btn"
                   className="group/btn relative w-full flex justify-center items-center gap-3 py-4 px-6 mt-4 rounded-xl text-base font-black text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 hover:from-blue-700 hover:via-indigo-700 hover:to-violet-700 focus:outline-none focus:ring-4 focus:ring-blue-500/50 disabled:opacity-70 disabled:cursor-not-allowed shadow-xl shadow-blue-600/30 hover:shadow-2xl hover:shadow-blue-600/40 transform transition-all duration-300 hover:-translate-y-1 active:translate-y-0 disabled:hover:translate-y-0 overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000"></div>

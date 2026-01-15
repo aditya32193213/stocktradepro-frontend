@@ -1,3 +1,17 @@
+/**
+ * File: dashboardSlice.js
+ * Purpose:
+ * - Redux slice for dashboard summary data
+ *
+ * Flow:
+ * - Fetches real-time dashboard metrics
+ * - Stores balance, portfolio value, P&L, and watchlist preview
+ *
+ * Key Responsibilities:
+ * - Maintain dashboard KPIs
+ * - Track loading and error states
+ */
+
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchDashboardSummary } from './dashboardThunks';
 

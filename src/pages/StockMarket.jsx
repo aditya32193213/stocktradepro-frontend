@@ -1,6 +1,25 @@
+/**
+ * File: StockMarket.jsx
+ * Purpose:
+ * - Displays list of all available stocks
+ *
+ * Flow:
+ * - Fetches stocks with pagination & infinite scroll
+ * - Supports search, sector filter, and sorting
+ * - Loads additional data on scroll
+ *
+ * Key Responsibilities:
+ * - Market exploration
+ * - Advanced filtering & sorting
+ * - Error and retry handling
+ *
+ * Access:
+ * - Protected (authenticated users)
+ */
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/core";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { 
   FaSearch, FaArrowUp, FaArrowDown, FaSort, FaSortUp, FaSortDown, 
@@ -14,9 +33,8 @@ import {
   selectStocksError, 
   selectPaginationMeta, 
   selectStockSectors 
-} from "@/features/stocks";
-import { StockLogo } from "@/components";
-import { TableSkeleton } from "@/components/common/SkeletonLoader";
+} from "@/features";
+import { StockLogo ,TableSkeleton } from "@/components";
 
 function useDebounce(value, delay = 500) {
   const [debounced, setDebounced] = useState(value);
@@ -29,13 +47,13 @@ function useDebounce(value, delay = 500) {
 
 export default function StockMarket() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   
-  const stocks = useSelector(selectStocks);
-  const loading = useSelector(selectStocksLoading);
-  const error = useSelector(selectStocksError);
-  const sectorsList = useSelector(selectStockSectors);
-  const { page, totalPages, totalRecords } = useSelector(selectPaginationMeta);
+  const stocks = useAppSelector(selectStocks);
+  const loading = useAppSelector(selectStocksLoading);
+  const error = useAppSelector(selectStocksError);
+  const sectorsList = useAppSelector(selectStockSectors);
+  const { page, totalPages, totalRecords } = useAppSelector(selectPaginationMeta);
 
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);

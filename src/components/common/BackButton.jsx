@@ -1,3 +1,17 @@
+/**
+ * File: BackButton.jsx
+ * Purpose:
+ * - Reusable back navigation button
+ *
+ * Flow:
+ * - Navigates to a specific route if `to` prop is provided
+ * - Falls back to browser history navigation (-1)
+ *
+ * Key Responsibilities:
+ * - Provide consistent back navigation UX
+ * - Reduce repeated navigation logic
+ */
+
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 

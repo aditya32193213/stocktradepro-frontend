@@ -1,3 +1,17 @@
+/**
+ * File: stocksSelectors.js
+ * Purpose:
+ * - Memoized selectors for Stocks state
+ *
+ * Flow:
+ * - Extracts stock list, loading state, errors
+ * - Provides pagination and sector data
+ *
+ * Key Responsibilities:
+ * - Improve UI performance
+ * - Centralize derived stock-related state
+ */
+
 import { createSelector } from '@reduxjs/toolkit';
 
 const selectStocksState = (state) => state.stocks;

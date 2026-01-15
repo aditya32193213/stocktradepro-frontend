@@ -1,14 +1,32 @@
+/**
+ * File: Profile.jsx
+ * Purpose:
+ * - Displays and edits user profile information
+ *
+ * Flow:
+ * - Fetches profile on mount
+ * - Allows inline editing of name and mobile
+ * - Updates profile via Redux thunk
+ *
+ * Key Responsibilities:
+ * - Account management
+ * - Profile persistence
+ * - Validation and feedback
+ *
+ * Access:
+ * - Protected
+ */
+
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectAuthUser } from "@/features/auth";
-import { fetchUserProfile, updateUserProfile } from "@/features/auth";
-import { CardSkeleton } from "@/components/common/SkeletonLoader";
-import toast from "@/utils/toast";
+import { useAppDispatch, useAppSelector } from "@/core";
+import { fetchUserProfile, updateUserProfile, selectAuthUser } from "@/features";
+import { CardSkeleton } from "@/components";
+import { showSuccess, showError, showLoading, dismissToast } from "@/utils";
 import { FaUser, FaEnvelope, FaPhone, FaIdCard, FaWallet, FaCalendar, FaEdit, FaCheck, FaTimes, FaShieldAlt, FaClock, FaChartLine } from "react-icons/fa";
 
 export default function Profile() {
-  const dispatch = useDispatch();
-  const user = useSelector(selectAuthUser);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(selectAuthUser);
 
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -37,7 +55,7 @@ export default function Profile() {
         });
       }
     } catch (error) {
-      toast.error("Failed to load profile");
+      showError("Failed to load profile");
     } finally {
       setLoading(false);
     }
@@ -47,33 +65,33 @@ export default function Profile() {
     e.preventDefault();
     
     if (!formData.name.trim()) {
-      toast.error("Name is required");
+      showError("Name is required");
       return;
     }
 
     if (!formData.mobile.trim() || formData.mobile.length !== 10) {
-      toast.error("Valid 10-digit mobile number is required");
+      showError("Valid 10-digit mobile number is required");
       return;
     }
 
     setSaving(true);
-    const toastId = toast.loading("Updating profile...");
+    const toastId = showLoading("Updating profile...");
 
     try {
       const result = await dispatch(updateUserProfile(formData));
       
-      toast.dismiss(toastId);
+      dismissToast(toastId);
       
       if (result.payload) {
-        toast.success("Profile updated successfully!");
+        showSuccess("Profile updated successfully!");
         setIsEditing(false);
         await loadProfile();
       } else {
-        toast.error(result.error?.message || "Failed to update profile");
+        showError(result.error?.message || "Failed to update profile");
       }
     } catch (error) {
-      toast.dismiss(toastId);
-      toast.error("An error occurred while updating profile");
+      dismissToast(toastId);
+      showError("An error occurred while updating profile");
     } finally {
       setSaving(false);
     }

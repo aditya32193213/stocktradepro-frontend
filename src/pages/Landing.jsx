@@ -1,19 +1,37 @@
+/**
+ * File: Landing.jsx
+ * Purpose:
+ * - Public landing page of StockTradePro
+ * - Serves as the marketing and onboarding entry point
+ *
+ * Flow:
+ * - Redirects authenticated users to dashboard
+ * - Fetches top-performing stocks for preview
+ * - Uses scroll & mouse tracking for parallax animations
+ *
+ * Key Responsibilities:
+ * - Introduce platform features and value proposition
+ * - Encourage registration and login
+ * - Display live stock movement preview
+ *
+ * Access:
+ * - Public (unauthenticated users only)
+ */
+
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/core";
 import { FaArrowUp, FaArrowDown, FaChartLine, FaShieldAlt, FaBriefcase, FaChevronRight, FaRocket, FaTrophy, FaUsers } from "react-icons/fa";
-import { fetchStocks, selectStocks, selectStocksLoading } from "@/features/stocks";
-import { selectIsAuthenticated } from "@/features/auth";
-import { StockLogo } from "@/components/index";
-import { TableSkeleton } from "@/components/common/SkeletonLoader";
+import { fetchStocks, selectStocks, selectStocksLoading, selectIsAuthenticated } from "@/features";
+import { StockLogo, TableSkeleton } from "@/components";
 
 export default function Landing() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   
-  const isAuthenticated = useSelector(selectIsAuthenticated);
-  const stocks = useSelector(selectStocks);
-  const loading = useSelector(selectStocksLoading);
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  const stocks = useAppSelector(selectStocks);
+  const loading = useAppSelector(selectStocksLoading);
   
   const [scrollY, setScrollY] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });

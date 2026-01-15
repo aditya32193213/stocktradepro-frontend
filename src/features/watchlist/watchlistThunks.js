@@ -1,5 +1,21 @@
+/**
+ * File: watchlistThunks.js
+ * Purpose:
+ * - Async Redux thunks for Watchlist API operations
+ *
+ * Flow:
+ * - Fetch watchlist from backend
+ * - Add stock to watchlist
+ * - Remove stock from watchlist
+ *
+ * Key Responsibilities:
+ * - Handle API communication
+ * - Normalize error handling
+ * - Trigger state refresh after mutations
+ */
+
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axiosInstance from '@/services/axiosInstance';
+import { axiosInstance } from '@/services';
 
 /**
  * Fetch user's watchlist

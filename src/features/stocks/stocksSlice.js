@@ -1,3 +1,19 @@
+/**
+ * File: stocksSlice.js
+ * Purpose:
+ * - Redux slice for stock market data
+ *
+ * Flow:
+ * - Fetches stocks list with pagination and filters
+ * - Supports infinite scroll behavior
+ * - Fetches single stock details and sectors
+ *
+ * Key Responsibilities:
+ * - Manage market data state
+ * - Handle selected stock view
+ * - Maintain pagination metadata
+ */
+
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchStocks, fetchStockById, fetchSectors } from './stocksThunks'; 
 

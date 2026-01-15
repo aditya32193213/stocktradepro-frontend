@@ -1,3 +1,18 @@
+/**
+ * File: PublicLayout.jsx
+ * Purpose:
+ * - Layout wrapper for public-facing pages
+ *
+ * Flow:
+ * - Renders Header at top
+ * - Renders Footer at bottom
+ * - Displays route content via <Outlet />
+ *
+ * Key Responsibilities:
+ * - Maintain consistent public UI
+ * - Separate public and authenticated layouts
+ */
+
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";

@@ -1,3 +1,18 @@
+/**
+ * File: ThemeContext.jsx
+ * Purpose:
+ * - Global theme (Dark / Light mode) provider
+ *
+ * Flow:
+ * - Reads theme preference from localStorage
+ * - Applies theme class to document root
+ * - Persists user preference across sessions
+ *
+ * Key Responsibilities:
+ * - Centralize theme management
+ * - Provide theme toggle functionality
+ */
+
 import { createContext, useContext, useEffect, useState } from "react";
 
 const ThemeContext = createContext();

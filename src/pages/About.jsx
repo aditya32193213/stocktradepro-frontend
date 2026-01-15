@@ -1,16 +1,31 @@
-// ============================================
-// ABOUT.JSX - Ultra Premium About Page
-// ============================================
+/**
+ * File: About.jsx
+ * Purpose:
+ * - Public-facing About page describing StockTradePro
+ *
+ * Flow:
+ * - Detects authentication status
+ * - Provides contextual back navigation (Dashboard / Home)
+ * - Displays platform mission, values, team, and CTA
+ *
+ * Key Responsibilities:
+ * - Brand storytelling
+ * - Trust building via stats, values, and team
+ * - Marketing + informational role
+ *
+ * Access:
+ * - Public (adapts behavior if user is authenticated)
+ */
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectIsAuthenticated } from "@/features/auth";
+import { useAppSelector } from "@/core";
+import { selectIsAuthenticated } from "@/features";
 import { FaLinkedin, FaTwitter, FaGithub, FaRocket, FaUsers, FaLightbulb, FaArrowLeft, FaShieldAlt, FaBolt, FaChartLine } from "react-icons/fa";
 
 export default function About() {
   const navigate = useNavigate();
-  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
   const handleBack = () => {
     if (isAuthenticated) {

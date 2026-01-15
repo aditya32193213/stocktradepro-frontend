@@ -1,23 +1,38 @@
+/**
+ * File: StockDetail.jsx
+ * Purpose:
+ * - Displays detailed information of a single stock
+ *
+ * Flow:
+ * - Fetches stock data by ID
+ * - Displays price, performance, and historical chart
+ * - Allows buy, sell, and add-to-watchlist actions
+ *
+ * Key Responsibilities:
+ * - Trading execution (BUY / SELL)
+ * - Data visualization
+ * - Portfolio navigation
+ *
+ * Access:
+ * - Protected
+ */
+
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/core";
 import { FaArrowUp, FaArrowDown, FaStar, FaExclamationTriangle, FaArrowLeft, FaChartLine, FaNewspaper, FaInfoCircle } from "react-icons/fa";
-import { fetchStockById, selectSelectedStock, selectStocksLoading, selectStocksError } from "@/features/stocks";
-import { buyStock, sellStock } from "@/features/transactions";
-import { addToWatchlist } from "@/features/watchlist";
-import { StockLogo } from "@/components";
-import { StockDetailSkeleton } from "@/components/common/SkeletonLoader";
-import StockChart from "@/components/common/StockChart"; 
-import toast from "@/utils/toast";
+import { fetchStockById, selectSelectedStock, selectStocksLoading, selectStocksError, buyStock, sellStock, addToWatchlist } from "@/features";
+import { StockLogo, StockChart, StockDetailSkeleton} from "@/components";
+import { showSuccess, showError, showLoading, dismissToast } from "@/utils";
 
 export default function StockDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const stock = useSelector(selectSelectedStock);
-  const loading = useSelector(selectStocksLoading);
-  const error = useSelector(selectStocksError);
+  const stock = useAppSelector(selectSelectedStock);
+  const loading = useAppSelector(selectStocksLoading);
+  const error = useAppSelector(selectStocksError);
 
   const [quantity, setQuantity] = useState(1);
   const [type, setType] = useState("BUY");
@@ -57,7 +72,7 @@ export default function StockDetail() {
     if (!stock) return;
 
     setIsSubmitting(true);
-    const toastId = toast.loading(`Processing ${type} order...`);
+    const toastId = showLoading(`Processing ${type} order...`);
 
     try {
       const action = type === "BUY" ? buyStock : sellStock;
@@ -68,16 +83,16 @@ export default function StockDetail() {
       }));
 
       if (action.fulfilled.match(result)) {
-        toast.dismiss(toastId);
-        toast.success(`Successfully ${type === "BUY" ? "bought" : "sold"} ${quantity} shares`);
+        dismissToast(toastId);
+        showSuccess(`Successfully ${type === "BUY" ? "bought" : "sold"} ${quantity} shares`);
         navigate("/portfolio");
       } else {
-        toast.dismiss(toastId);
-        toast.error(result.payload || "Transaction failed");
+        dismissToast(toastId);
+        showError(result.payload || "Transaction failed");
       }
     } catch (error) {
-      toast.dismiss(toastId);
-      toast.error("An error occurred");
+      dismissToast(toastId);
+      showError("An error occurred");
     } finally {
       setIsSubmitting(false);
     }
@@ -87,12 +102,12 @@ export default function StockDetail() {
     if (!stock) return;
     const toastId = toast.loading("Adding to watchlist...");
     const result = await dispatch(addToWatchlist(stock._id));
-    toast.dismiss(toastId);
+    dismissToast(toastId);
     
     if (addToWatchlist.fulfilled.match(result)) {
-      toast.success("Added to watchlist");
+      showSuccess("Added to watchlist");
     } else {
-      toast.error(result.payload || "Failed to add");
+      showError(result.payload || "Failed to add");
     }
   };
 

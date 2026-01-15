@@ -1,3 +1,18 @@
+/**
+ * File: portfolioSlice.js
+ * Purpose:
+ * - Redux slice for managing user portfolio state
+ *
+ * Flow:
+ * - Fetches portfolio holdings and summary
+ * - Stores P&L metrics and aggregated values
+ *
+ * Key Responsibilities:
+ * - Maintain portfolio holdings
+ * - Track realized and unrealized profit/loss
+ * - Handle loading and error states
+ */
+
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchPortfolio } from './portfolioThunks';
 

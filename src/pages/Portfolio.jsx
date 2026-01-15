@@ -1,6 +1,24 @@
+/**
+ * File: Portfolio.jsx
+ * Purpose:
+ * - Displays user portfolio overview
+ *
+ * Flow:
+ * - Fetches holdings and summary data
+ * - Calculates profit/loss and allocation
+ * - Visualizes holdings using charts
+ *
+ * Key Responsibilities:
+ * - Portfolio performance tracking
+ * - Investment breakdown visualization
+ * - Navigation to related actions
+ *
+ * Access:
+ * - Protected
+ */
 
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/core";
 import { useNavigate } from "react-router-dom";
 import { FaArrowUp, FaArrowDown, FaChartLine, FaWallet, FaBox, FaChartPie, FaShoppingCart } from "react-icons/fa";
 import { FaArrowTrendUp } from "react-icons/fa6";
@@ -10,19 +28,19 @@ import {
   selectPortfolioHoldings,
   selectPortfolioSummary,
   selectPortfolioLoading,
-} from "@/features/portfolio";
-import { StockLogo } from "@/components";
-import { DashboardSkeleton } from "@/components/common/SkeletonLoader";
+} from "@/features";
+import { StockLogo, DashboardSkeleton } from "@/components";
+
 
 const COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#06B6D4', '#EC4899', '#14B8A6'];
 
 export default function Portfolio() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const holdings = useSelector(selectPortfolioHoldings);
-  const summary = useSelector(selectPortfolioSummary);
-  const loading = useSelector(selectPortfolioLoading);
+  const holdings = useAppSelector(selectPortfolioHoldings);
+  const summary = useAppSelector(selectPortfolioSummary);
+  const loading = useAppSelector(selectPortfolioLoading);
 
   useEffect(() => {
     dispatch(fetchPortfolio());

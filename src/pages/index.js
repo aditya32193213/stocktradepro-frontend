@@ -1,3 +1,17 @@
+/**
+ * File: pages/index.js
+ * Purpose:
+ * - Centralized lazy-loaded exports for all pages
+ *
+ * Flow:
+ * - Uses React.lazy to enable code splitting
+ * - Imported directly by routing configuration
+ *
+ * Key Responsibilities:
+ * - Improve performance via lazy loading
+ * - Clean and maintainable page imports
+ */
+
 import { lazy } from "react";
 
 export const Landing = lazy(() => import("./Landing"));

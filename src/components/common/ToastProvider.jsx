@@ -1,3 +1,17 @@
+/**
+ * File: ToastProvider.jsx
+ * Purpose:
+ * - Global toast notification provider
+ *
+ * Flow:
+ * - Configures react-hot-toast styles and behavior
+ * - Handles success, error, and loading notifications
+ *
+ * Key Responsibilities:
+ * - Centralized notification system
+ * - Consistent feedback across the app
+ */
+
 import { Toaster } from 'react-hot-toast';
 
 export default function ToastProvider() {

@@ -1,7 +1,24 @@
+/**
+ * File: Footer.jsx
+ * Purpose:
+ * - Global footer component for public pages
+ *
+ * Flow:
+ * - Displays brand info, navigation links, and social icons
+ * - Opens legal documents in modal dialogs
+ *
+ * Key Responsibilities:
+ * - Branding and trust signals
+ * - Legal compliance (privacy, terms, cookies)
+ *
+ * Access:
+ * - Public layout only
+ */
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaGithub, FaTwitter, FaLinkedin, FaFacebook, FaInstagram, FaBolt, FaHeart } from "react-icons/fa";
-import InfoModal from "@/components/common/InfoModal"; 
+import { InfoModal } from "@/components/common";
 import clsx from "clsx";
 
 export default function Footer() {
@@ -117,7 +134,7 @@ export default function Footer() {
         </div>
       </footer>
 
-      {modalType && <InfoModal type={modalType} onClose={() => setModalType(null)} />}
+       {modalType && (<div data-testid="info-modal"><InfoModal type={modalType} onClose={() => setModalType(null)} /></div>)}
     </>
   );
 }

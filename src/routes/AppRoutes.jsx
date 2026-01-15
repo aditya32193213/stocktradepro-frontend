@@ -1,12 +1,22 @@
+/**
+ * File: AppRoutes.jsx
+ * Purpose:
+ * - Centralized routing configuration for the application
+ *
+ * Flow:
+ * - Defines public, guest-only, and protected routes
+ * - Loads layouts based on authentication state
+ * - Fetches user profile on page refresh if token exists
+ *
+ * Why this file exists:
+ * - Keeps routing logic isolated and scalable
+ * - Aligns with real-world enterprise routing patterns
+ */
 import { Suspense, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { selectIsAuthenticated, selectAuthUser, fetchUserProfile } from "@/features/auth";
-
-import AppLayout from "@/components/layout/AppLayout";
-import PublicLayout from "@/components/layout/PublicLayout";
-import ProtectedRoute from "@/components/common/ProtectedRoute";
-import GuestRoute from "@/components/common/GuestRoute";
+import { useAppDispatch, useAppSelector } from "@/core";
+import { selectIsAuthenticated, selectAuthUser, fetchUserProfile } from "@/features";
+import { AppLayout, PublicLayout, ProtectedRoute, GuestRoute} from "@/components";
 
 import {
   Landing,
@@ -25,15 +35,15 @@ import {
 } from "@/pages";
 
 const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center text-gray-600 dark:text-gray-300">
+  <div data-testid="page-loader" className="min-h-screen flex items-center justify-center text-gray-600 dark:text-gray-300">
     <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
   </div>
 );
 
 export default function AppRoutes() {
-  const dispatch = useDispatch();
-  const isAuthenticated = useSelector(selectIsAuthenticated);
-  const user = useSelector(selectAuthUser);
+  const dispatch = useAppDispatch();
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  const user = useAppSelector(selectAuthUser);
 
   // Fetch user profile on reload if token exists
   useEffect(() => {

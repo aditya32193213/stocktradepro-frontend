@@ -1,39 +1,59 @@
+/**
+ * File: Dashboard.jsx
+ * Purpose:
+ * - Main user landing page after login
+ *
+ * Flow:
+ * - Fetches dashboard summary on mount
+ * - Refreshes summary periodically (polling)
+ * - Displays portfolio KPIs, market overview, and watchlist preview
+ *
+ * Key Responsibilities:
+ * - Real-time portfolio overview
+ * - Quick navigation to core features
+ * - Watchlist management from dashboard
+ *
+ * Access:
+ * - Protected (authenticated users only)
+ */
+
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/core";
 import { useNavigate } from "react-router-dom";
 import { FaWallet, FaChartLine, FaBox, FaStar, FaArrowUp, FaArrowDown, FaTrash, FaRegChartBar, FaFire } from "react-icons/fa";
 import { FaArrowTrendUp } from "react-icons/fa6";
-import { fetchDashboardSummary, selectDashboardSummary, selectDashboardLoading } from "@/features/dashboard";
-import { removeFromWatchlist } from "@/features/watchlist"; 
-import { DashboardSkeleton } from "@/components/common/SkeletonLoader";
-import { StockLogo } from "@/components";
-import toast from "@/utils/toast";
+import { fetchDashboardSummary, selectDashboardSummary, selectDashboardLoading, removeFromWatchlist } from "@/features";
+import { StockLogo ,DashboardSkeleton} from "@/components";
+import { showSuccess, showError, showLoading, dismissToast } from "@/utils";
 
 export default function Dashboard() {
-  const dispatch = useDispatch();
+ const dispatch = useAppDispatch(); // ✅ Updated
   const navigate = useNavigate();
-  const summary = useSelector(selectDashboardSummary);
-  const loading = useSelector(selectDashboardLoading);
+  
+  const summary = useAppSelector(selectDashboardSummary); // ✅ Updated
+  const loading = useAppSelector(selectDashboardLoading); // ✅ Updated
 
   useEffect(() => {
     dispatch(fetchDashboardSummary());
     const interval = setInterval(() => {
       dispatch(fetchDashboardSummary());
-    }, 30000);
+    }, 30000); // Poll every 30s
     return () => clearInterval(interval);
   }, [dispatch]);
 
-  const handleRemoveWatchlist = async (e, watchlistId) => {
-    e.stopPropagation(); 
-    e.preventDefault();  
+  const handleRemoveFromWatchlist = async (e, stockId, symbol) => {
+    e.stopPropagation();
+    const toastId = showLoading(`Removing ${symbol}...`);
     
-    const result = await dispatch(removeFromWatchlist(watchlistId));
+    // Pass the watchlist ID if available, or handle based on API requirement
+    const result = await dispatch(removeFromWatchlist(stockId));
     
+    dismissToast(toastId);
     if (removeFromWatchlist.fulfilled.match(result)) {
-      toast.success("Removed from watchlist");
-      dispatch(fetchDashboardSummary()); 
+      showSuccess(`${symbol} removed`);
+      dispatch(fetchDashboardSummary()); // Refresh preview
     } else {
-      toast.error("Failed to remove. Please try again.");
+      showError("Failed to remove");
     }
   };
 
@@ -340,7 +360,7 @@ function SummaryCard({ title, value, icon: Icon, color, subValue, trend, badge }
   const colorScheme = colors[color];
 
   return (
-    <div className={`group relative rounded-2xl border ${colorScheme.border} ${colorScheme.bg} p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden`}>
+    <div  data-testid={`summary-card-${title.toLowerCase().replace(/\s/g, '-')}`} className={`group relative rounded-2xl border ${colorScheme.border} ${colorScheme.bg} p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden`}>
       {/* Subtle gradient overlay */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-white/20 to-transparent dark:from-white/5 rounded-full blur-2xl"></div>
       

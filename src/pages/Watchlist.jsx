@@ -1,5 +1,22 @@
+/**
+ * File: Watchlist.jsx
+ * Purpose:
+ * - Displays user-saved favorite stocks
+ *
+ * Flow:
+ * - Fetches watchlist on mount
+ * - Allows removal and navigation to stock detail
+ *
+ * Key Responsibilities:
+ * - Track interesting stocks
+ * - Quick access to stock insights
+ *
+ * Access:
+ * - Protected
+ */
+
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/core";
 import { useNavigate } from "react-router-dom";
 import { FaTrash, FaArrowUp, FaArrowDown, FaStar, FaShoppingCart, FaChartLine, FaEye, FaFire } from "react-icons/fa";
 import { 
@@ -7,16 +24,16 @@ import {
   removeFromWatchlist, 
   selectWatchlistItems, 
   selectWatchlistLoading 
-} from "@/features/watchlist";
+} from "@/features";
 import { StockLogo } from "@/components";
-import toast from "@/utils/toast";
+import { showLoading, dismissToast, showSuccess, showError } from "@/utils";
 
 export default function Watchlist() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   
-  const watchlist = useSelector(selectWatchlistItems);
-  const loading = useSelector(selectWatchlistLoading);
+  const watchlist = useAppSelector(selectWatchlistItems);
+  const loading = useAppSelector(selectWatchlistLoading);
   const [removingId, setRemovingId] = useState(null);
 
   useEffect(() => {
@@ -25,21 +42,21 @@ export default function Watchlist() {
 
   const handleRemove = async (watchlistId, symbol) => {
     setRemovingId(watchlistId);
-    const toastId = toast.loading(`Removing ${symbol}...`);
+    const toastId = showLoading(`Removing ${symbol}...`);
     
     try {
       const result = await dispatch(removeFromWatchlist(watchlistId));
       
-      toast.dismiss(toastId);
+      dismissToast(toastId);
       
       if (removeFromWatchlist.fulfilled.match(result)) {
-        toast.success(`${symbol} removed from watchlist`);
+        showSuccess(`${symbol} removed from watchlist`);
       } else {
-        toast.error(result.payload || "Failed to remove from watchlist");
+        showError(result.payload || "Failed to remove from watchlist");
       }
     } catch (error) {
-      toast.dismiss(toastId);
-      toast.error("An error occurred");
+      dismissToast(toastId);
+      showError("An error occurred");
     } finally {
       setRemovingId(null);
     }

@@ -1,3 +1,18 @@
+/**
+ * File: StockLogo.jsx
+ * Purpose:
+ * - Displays stock logo with graceful fallback
+ *
+ * Flow:
+ * - Renders image if available
+ * - Falls back to symbol-based avatar on error
+ * - Ensures visibility in dark mode
+ *
+ * Key Responsibilities:
+ * - Branding consistency
+ * - Robust image handling
+ */
+
 import { useState } from "react";
 
 /**

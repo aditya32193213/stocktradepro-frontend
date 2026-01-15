@@ -1,3 +1,20 @@
+/**
+ * File: Sidebar.jsx
+ * Purpose:
+ * - Primary sidebar navigation for authenticated users
+ *
+ * Flow:
+ * - Renders navigation links with active state highlighting
+ * - Supports collapse/expand behavior
+ *
+ * Key Responsibilities:
+ * - App-wide navigation
+ * - Improve UX with compact mode
+ *
+ * Access:
+ * - Used only within AppLayout
+ */
+
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import {

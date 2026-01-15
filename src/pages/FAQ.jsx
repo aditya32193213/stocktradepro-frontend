@@ -1,11 +1,26 @@
-// ============================================
-// FAQ.JSX - Ultra Premium FAQ Page
-// ============================================
+/**
+ * File: FAQ.jsx
+ * Purpose:
+ * - Help Center / FAQ page
+ *
+ * Flow:
+ * - Provides searchable FAQ list
+ * - Includes accordion-style Q&A
+ * - Shows rotating trading tips carousel
+ *
+ * Key Responsibilities:
+ * - User self-support
+ * - Reduce onboarding friction
+ * - Educational guidance for new traders
+ *
+ * Access:
+ * - Public (navigation adapts based on auth state)
+ */
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectIsAuthenticated } from "@/features/auth";
+import { useAppSelector } from "@/core";
+import { selectIsAuthenticated } from "@/features";
 import { 
   FaChevronDown, FaSearch, FaUserShield, FaWallet, 
   FaChartLine, FaLightbulb, FaArrowLeft, FaArrowRight, FaEnvelope, 
@@ -14,7 +29,7 @@ import {
 
 export default function FAQ() {
   const navigate = useNavigate();
-  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
   
   const [openIndex, setOpenIndex] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
