@@ -13,8 +13,7 @@
  * - No store or middleware involved
  */
 
-import portfolioReducer, { resetPortfolio } from '@/features/portfolio/portfolioSlice';
-import { fetchPortfolio } from '@/features/portfolio/portfolioThunks';
+import  { resetPortfolio, fetchPortfolio, portfolioReducer } from '@/features';
 
 describe('portfolioSlice reducer', () => {
   const initialState = {

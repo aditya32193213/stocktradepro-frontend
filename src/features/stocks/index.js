@@ -11,7 +11,7 @@
  * - Keep imports clean and consistent
  * - Centralize stocks-related exports
  */
-
-export { default } from './stocksSlice';
+export { default as stocksReducer } from './stocksSlice';
+export * from './stocksSlice';
 export * from './stocksThunks';
 export * from './stocksSelectors';

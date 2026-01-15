@@ -19,3 +19,5 @@ export * from './hooks';
 
 // 3. Re-export Context 
 export * from './context';
+
+export { default as rootReducer } from './rootReducer';

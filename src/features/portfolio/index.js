@@ -12,7 +12,7 @@
  * - Maintain modular Redux feature structure
  */
 
-export { default } from './portfolioSlice';
+export { default as portfolioReducer } from './portfolioSlice';
 export * from './portfolioSlice';
 export * from './portfolioThunks';
 export * from './portfolioSelectors';

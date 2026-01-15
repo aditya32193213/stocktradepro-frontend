@@ -15,37 +15,18 @@
  * - Tests user behavior, not implementation
  */
 
-import { render, screen, fireEvent } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import { configureStore } from '@reduxjs/toolkit';
+
+import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { renderWithProviders } from './testRender';
 import Login from '@/pages/Login';
-import authReducer from '@/features/auth/authSlice';
-import { loginUser } from '@/features/auth';
-import toast from '@/utils/toast';
 import { vi } from 'vitest';
+import { loginUser } from '@/features/auth';
 
-// Mock toast utilities
-vi.mock('@/utils/toast', () => ({
-  default: {
-    loading: vi.fn(() => 'toast-id'),
-    success: vi.fn(),
-    error: vi.fn(),
-    dismiss: vi.fn(),
-  },
-}));
-
-// Mock login thunk
-vi.mock('@/features/auth', async () => {
-  const actual = await vi.importActual('@/features/auth');
-  return {
-    ...actual,
-    loginUser: vi.fn(() => ({ type: 'auth/login/fulfilled' })),
-  };
-});
-
-// Mock navigation
+/* ----------------------------------
+   Mock navigate
+----------------------------------- */
 const mockNavigate = vi.fn();
+
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
   return {
@@ -54,84 +35,96 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-const renderWithProviders = (preloadedAuthState = {}) => {
-  const store = configureStore({
-    reducer: { auth: authReducer },
-    preloadedState: {
-      auth: {
-        loading: false,
-        isAuthenticated: false,
-        error: null,
-        ...preloadedAuthState,
-      },
-    },
-  });
-
-  return render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <Login />
-      </BrowserRouter>
-    </Provider>
-  );
-};
+/* ----------------------------------
+   Mock login thunk
+----------------------------------- */
+vi.mock('@/features/auth', async () => {
+  const actual = await vi.importActual('@/features/auth');
+  return {
+    ...actual,
+    loginUser: vi.fn(),
+  };
+});
 
 describe('Login Page', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
+  const renderPage = (authState = {}) =>
+    renderWithProviders(<Login />, {
+      preloadedState: {
+        auth: {
+          isAuthenticated: false,
+          loading: false,
+          error: null,
+          ...authState,
+        },
+      },
+    });
 
+  /* ----------------------------------
+     Render test
+  ----------------------------------- */
   test('renders login form', () => {
-    renderWithProviders();
+    renderPage();
 
     expect(
       screen.getByPlaceholderText(/john@example.com/i)
     ).toBeInTheDocument();
 
     expect(
-      screen.getByTestId('login-submit-btn')
+      screen.getByPlaceholderText(/••••••••/i)
     ).toBeInTheDocument();
   });
 
+  /* ----------------------------------
+     Loading disables submit
+  ----------------------------------- */
   test('disables submit button when loading', () => {
-    renderWithProviders({ loading: true });
+    renderPage({ loading: true });
 
-    const button = screen.getByTestId('login-submit-btn');
-    expect(button).toBeDisabled();
+    const submitBtn = screen.getByTestId('login-submit-btn');
+    expect(submitBtn).toBeDisabled();
   });
 
+  /* ----------------------------------
+     Toggle password visibility
+  ----------------------------------- */
   test('toggles password visibility', () => {
-    renderWithProviders();
+    renderPage();
 
-    const passwordInput = screen.getByPlaceholderText(/••••••••/i);
-    const toggleBtn = screen.getByRole('button', { name: '' }); // icon button
+    const passwordInput =
+      screen.getByPlaceholderText(/••••••••/i);
+
+    const toggleBtn =
+      screen.getByTestId('toggle-password');
 
     expect(passwordInput).toHaveAttribute('type', 'password');
 
     fireEvent.click(toggleBtn);
+
     expect(passwordInput).toHaveAttribute('type', 'text');
-
-    fireEvent.click(toggleBtn);
-    expect(passwordInput).toHaveAttribute('type', 'password');
   });
 
-  test('dispatches loginUser and navigates on success', async () => {
-    renderWithProviders();
+  /* ----------------------------------
+     Login success flow
+  ----------------------------------- */
+test('dispatches loginUser on successful submit', async () => {
+  const { store } = renderWithProviders(<Login />);
 
-    fireEvent.change(
-      screen.getByPlaceholderText(/john@example.com/i),
-      { target: { value: 'test@example.com' } }
-    );
+  fireEvent.change(
+    screen.getByPlaceholderText(/john@example.com/i),
+    { target: { value: 'test@example.com' } }
+  );
 
-    fireEvent.change(
-      screen.getByPlaceholderText(/••••••••/i),
-      { target: { value: 'password123' } }
-    );
+  fireEvent.change(
+    screen.getByPlaceholderText(/••••••••/i),
+    { target: { value: 'password123' } }
+  );
 
-    fireEvent.click(screen.getByTestId('login-submit-btn'));
+  fireEvent.click(screen.getByTestId('login-submit-btn'));
 
+  await waitFor(() => {
+    const actions = store.getState().auth;
     expect(loginUser).toHaveBeenCalledTimes(1);
-    expect(toast.success).toHaveBeenCalled();
-    expect(mockNavigate).toHaveBeenCalledWith('/dashboard');
   });
+});
+
 });

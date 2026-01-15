@@ -52,6 +52,7 @@ const Sidebar = () => {
         <div className="flex justify-end p-4">
           <button
             onClick={() => setCollapsed(!collapsed)}
+            data-testid="sidebar-toggle"
             className="group relative p-2.5 rounded-xl text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-blue-900/20 dark:hover:to-purple-900/20 transition-all duration-200 hover:scale-110 active:scale-95"
             title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           >

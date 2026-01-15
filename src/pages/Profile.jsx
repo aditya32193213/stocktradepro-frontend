@@ -147,6 +147,7 @@ export default function Profile() {
             {!isEditing && (
               <button
                 onClick={() => setIsEditing(true)}
+                data-testid="edit-profile-btn"
                 className="group px-6 py-3 rounded-xl bg-white text-blue-600 font-bold hover:bg-blue-50 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2"
               >
                 <FaEdit className="group-hover:rotate-12 transition-transform" />

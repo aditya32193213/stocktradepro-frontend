@@ -80,4 +80,6 @@ const watchlistSlice = createSlice({
 });
 
 export const { resetWatchlist } = watchlistSlice.actions;
+
+export const watchlistReducer = watchlistSlice.reducer;
 export default watchlistSlice.reducer;

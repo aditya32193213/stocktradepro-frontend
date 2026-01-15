@@ -250,7 +250,7 @@ export default function StockDetail() {
             </div>
 
             {/* Enhanced Trade Box */}
-            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <div data-testid="trade-box" className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-xl transition-shadow duration-300">
               <div className="p-6">
                 {/* Buy/Sell Toggle */}
                 <div className="grid grid-cols-2 gap-3 mb-6 p-1.5 bg-gray-100 dark:bg-gray-800 rounded-xl">

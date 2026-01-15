@@ -98,4 +98,5 @@ const stocksSlice = createSlice({
 });
 
 export const { setSearchQuery, clearSelectedStock, resetStocks } = stocksSlice.actions;
+export const stocksReducer = stocksSlice.reducer;
 export default stocksSlice.reducer;

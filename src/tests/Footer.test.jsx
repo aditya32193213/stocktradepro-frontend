@@ -12,17 +12,13 @@
  * - Avoids testing modal implementation details
  */
 
-import { render, screen, fireEvent } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import Footer from '@/components/layout/Footer';
+import { screen, fireEvent } from '@testing-library/react';
+import { renderWithProviders } from './testRender';
+import { Footer } from '@/components';
 
 describe('Footer Component', () => {
   const renderFooter = () =>
-    render(
-      <BrowserRouter>
-        <Footer />
-      </BrowserRouter>
-    );
+    renderWithProviders(<Footer />);
 
   test('renders brand name and description', () => {
     renderFooter();
@@ -40,12 +36,15 @@ describe('Footer Component', () => {
     renderFooter();
 
     // Open modal
-    fireEvent.click(screen.getByText(/terms of service/i));
+    fireEvent.click(
+      screen.getByText(/terms of service/i)
+    );
 
-    const modal = screen.getByTestId('info-modal');
-    expect(modal).toBeInTheDocument();
+    expect(
+      screen.getByTestId('info-modal')
+    ).toBeInTheDocument();
 
-    // Close modal (InfoModal exposes close button)
+    // Close modal
     fireEvent.click(
       screen.getByRole('button', { name: /close/i })
     );

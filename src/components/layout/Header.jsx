@@ -85,7 +85,7 @@ const Header = () => {
         </div>
 
         <div className="relative flex items-center gap-3">
-          <ThemeToggle />
+          <ThemeToggle  aria-label="Toggle theme"/>
 
           {isAuthenticated ? (
             <div className="relative" ref={dropdownRef}>
@@ -174,12 +174,14 @@ const Header = () => {
             <div className="flex gap-3">
               <button 
                 onClick={() => navigate('/login')} 
+                data-testid="login-btn"
                 className="px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
               >
                 Login
               </button>
               <button 
                 onClick={() => navigate('/register')} 
+                data-testid="signup-btn"
                 className="relative px-5 py-2 text-sm rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-105 active:scale-95"
               >
                 <span className="relative z-10">Sign Up</span>

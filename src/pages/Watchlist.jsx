@@ -287,6 +287,7 @@ export default function Watchlist() {
                         </td>
                         <td 
                           className="px-6 py-5 cursor-pointer"
+                          data-testid={`watchlist-row-${stock._id}`}
                           onClick={() => handleRowClick(stock._id)}
                         >
                           <span className="font-black text-base text-gray-900 dark:text-white group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">
@@ -328,6 +329,7 @@ export default function Watchlist() {
                         <td className="px-6 py-5 text-center">
                           <button
                             disabled={removingId === item._id}
+                            data-testid={`remove-watchlist-${item._id}`}
                             className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-sm transition-all shadow-md ${
                               removingId === item._id
                                 ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 cursor-not-allowed'

@@ -359,6 +359,7 @@ export default function StockMarket() {
                       return (
                         <tr 
                           key={stock._id} 
+                          data-testid={`stock-row-${stock._id}`}
                           onClick={() => navigate(`/stocks/${stock._id}`)} 
                           className="group hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-indigo-50/30 dark:hover:from-blue-900/10 dark:hover:to-indigo-900/5 cursor-pointer transition-all duration-200 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-blue-600"
                           style={{ animationDelay: `${index * 0.02}s` }}

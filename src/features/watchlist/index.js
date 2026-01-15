@@ -11,7 +11,8 @@
  * - Centralize watchlist-related exports
  */
 
-export { default } from './watchlistSlice';
+export { default as watchlistReducer } from './watchlistSlice';
 export * from './watchlistSlice';
 export * from './watchlistThunks';
 export * from './watchlistSelectors';
+

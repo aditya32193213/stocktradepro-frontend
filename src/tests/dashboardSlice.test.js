@@ -13,8 +13,7 @@
  * - No store or middleware involved
  */
 
-import dashboardReducer, { resetDashboard } from '@/features/dashboard/dashboardSlice';
-import { fetchDashboardSummary } from '@/features/dashboard/dashboardThunks';
+import { fetchDashboardSummary, resetDashboard, dashboardReducer } from '@/features';
 
 describe('dashboardSlice reducer', () => {
   const initialState = {

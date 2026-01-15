@@ -378,6 +378,7 @@ export default function Register() {
             <button
               type="submit"
               disabled={loading}
+              data-testid="register-submit-btn"
               className="group relative w-full py-4 mt-6 rounded-xl bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 text-white font-bold text-sm uppercase tracking-wide shadow-xl shadow-blue-500/40 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-500/50 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 overflow-hidden"
             >
               {/* Button Shine Effect */}

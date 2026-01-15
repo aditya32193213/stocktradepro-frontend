@@ -12,7 +12,7 @@
  * - Tests reducer behavior, not implementation details
  */
 
-import authReducer, { logout } from '@/features/auth/authSlice';
+import { authReducer, logout } from '@/features';
 
 describe('authSlice reducer', () => {
   beforeEach(() => {

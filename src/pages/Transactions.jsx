@@ -222,6 +222,7 @@ export default function Transactions() {
               <button
                 onClick={handleExportPDF}
                 disabled={loading || exportingPDF}
+                data-testid="export-pdf-btn"
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-red-500 to-rose-600 text-white font-bold text-sm shadow-lg shadow-red-500/30 hover:shadow-red-500/50 transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 {exportingPDF ? (

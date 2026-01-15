@@ -14,8 +14,11 @@
  */
 
 import { Outlet } from "react-router-dom";
-import Header from "./Header";
-import Footer from "./Footer";
+// import Header from "./Header";
+// import Footer from "./Footer";
+import { Header, Footer } from "@/components";
+
+
 
 export default function PublicLayout() {
   return (

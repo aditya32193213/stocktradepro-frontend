@@ -13,12 +13,14 @@
  */
 
 import { combineReducers } from '@reduxjs/toolkit';
-import authReducer from '@/features/auth';
-import stocksReducer from '@/features/stocks';
-import transactionsReducer from '@/features/transactions';
-import watchlistReducer from '@/features/watchlist';
-import dashboardReducer from '@/features/dashboard'; 
-import portfolioReducer from '@/features/portfolio'; 
+import {
+  authReducer,
+  stocksReducer,
+  dashboardReducer,
+  portfolioReducer,
+  transactionsReducer,
+  watchlistReducer,
+} from '@/features';
 
 const rootReducer = combineReducers({
   auth: authReducer,

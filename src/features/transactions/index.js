@@ -12,7 +12,7 @@
  * - Maintain clean Redux feature boundaries
  */
 
-export { default } from './transactionsSlice';
+export { default as transactionsReducer } from './transactionsSlice';
 export * from './transactionsSlice';
 export * from './transactionsThunks';
 export * from './transactionsSelectors';

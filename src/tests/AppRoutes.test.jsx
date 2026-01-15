@@ -12,16 +12,23 @@
  * - Uses React Testing Library
  * - Tests routing behavior, not internal implementation
  */
+/**
+ * File: AppRoutes.test.jsx
+ * Purpose:
+ * - Unit tests for application routing behavior
+ */
 
-import { render, screen } from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
-import AppRoutes from '@/routes/AppRoutes';
-import authReducer from '@/features/auth/authSlice';
+import { MemoryRouter } from 'react-router-dom';
+import { AppRoutes } from '@/routes';
+import { authReducer } from '@/features';
 import { vi } from 'vitest';
 
-// ✅ Mock Layouts with Outlet rendering
+// ─────────────────────────────────────────────
+// Mock Layouts (Outlet is required)
+// ─────────────────────────────────────────────
 vi.mock('@/components/layout/AppLayout', () => ({
   default: () => {
     const { Outlet } = require('react-router-dom');
@@ -36,7 +43,9 @@ vi.mock('@/components/layout/PublicLayout', () => ({
   }
 }));
 
-// ✅ Mock Pages
+// ─────────────────────────────────────────────
+// Mock Pages
+// ─────────────────────────────────────────────
 vi.mock('@/pages', () => ({
   Landing: () => <div>Landing Page</div>,
   Login: () => <div>Login Page</div>,
@@ -53,15 +62,9 @@ vi.mock('@/pages', () => ({
   FAQ: () => <div>FAQ</div>,
 }));
 
-// ✅ Mock auth thunk only (keep selectors real)
-vi.mock('@/features/auth', async () => {
-  const actual = await vi.importActual('@/features/auth');
-  return {
-    ...actual,
-    fetchUserProfile: vi.fn(() => ({ type: 'auth/fetchProfile/fulfilled' })),
-  };
-});
-
+// ─────────────────────────────────────────────
+// Helper: render with router + custom store
+// ─────────────────────────────────────────────
 const renderWithStore = (initialEntries, isAuthenticated) => {
   const store = configureStore({
     reducer: { auth: authReducer },
@@ -75,7 +78,7 @@ const renderWithStore = (initialEntries, isAuthenticated) => {
     },
   });
 
-  return render(
+  render(
     <Provider store={store}>
       <MemoryRouter initialEntries={initialEntries}>
         <AppRoutes />
@@ -84,6 +87,9 @@ const renderWithStore = (initialEntries, isAuthenticated) => {
   );
 };
 
+// ─────────────────────────────────────────────
+// Tests
+// ─────────────────────────────────────────────
 describe('AppRoutes', () => {
   test('renders Landing page on "/"', async () => {
     renderWithStore(['/'], false);
@@ -98,16 +104,12 @@ describe('AppRoutes', () => {
   test('redirects unauthenticated user from /dashboard to login', async () => {
     renderWithStore(['/dashboard'], false);
 
-    // ✅ Assert redirected destination
     expect(await screen.findByText(/login page/i)).toBeInTheDocument();
-
-    // ✅ Assert protected content is not shown
     expect(screen.queryByText(/dashboard page/i)).not.toBeInTheDocument();
   });
 
   test('allows authenticated user to access /dashboard', async () => {
     renderWithStore(['/dashboard'], true);
-
     expect(await screen.findByText(/dashboard page/i)).toBeInTheDocument();
   });
 });

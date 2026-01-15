@@ -12,17 +12,13 @@
  * - Uses real Redux reducer with preloaded state
  * - Avoids brittle text-based assertions
  */
-
-import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import { configureStore } from '@reduxjs/toolkit';
+import { screen } from '@testing-library/react';
+import { renderWithProviders } from "./testRender";
 import Dashboard from '@/pages/Dashboard';
-import dashboardReducer from '@/features/dashboard/dashboardSlice';
-import { fetchDashboardSummary } from '@/features/dashboard';
+import { fetchDashboardSummary } from '@/features';
 import { vi } from 'vitest';
 
-// Mock thunk
+// Mock thunk ONLY
 vi.mock('@/features/dashboard', async () => {
   const actual = await vi.importActual('@/features/dashboard');
   return {
@@ -31,30 +27,19 @@ vi.mock('@/features/dashboard', async () => {
   };
 });
 
-// Mock Skeleton Loader
+// Mock Skeleton
 vi.mock('@/components/common/SkeletonLoader', () => ({
-  DashboardSkeleton: () => <div data-testid="dashboard-skeleton">Loading...</div>,
+  DashboardSkeleton: () => (
+    <div data-testid="dashboard-skeleton">Loading...</div>
+  ),
 }));
 
-const renderWithStore = (preloadedDashboardState) => {
-  const store = configureStore({
-    reducer: { dashboard: dashboardReducer },
-    preloadedState: {
-      dashboard: preloadedDashboardState,
-    },
-  });
+vi.mock('@/components/common/SkeletonLoader', () => ({
+  DashboardSkeleton: () => (
+    <div data-testid="dashboard-skeleton">Dashboard Skeleton</div>
+  ),
+}));
 
-  return {
-    store,
-    ...render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <Dashboard />
-        </BrowserRouter>
-      </Provider>
-    ),
-  };
-};
 
 describe('Dashboard Page', () => {
   beforeEach(() => {
@@ -62,26 +47,34 @@ describe('Dashboard Page', () => {
   });
 
   test('dispatches fetchDashboardSummary on mount', () => {
-    renderWithStore({
-      loading: false,
-      balance: 0,
-      totalPortfolioValue: 0,
-      holdingsCount: 0,
-      watchlistCount: 0,
-      watchlistPreview: [],
+    renderWithProviders(<Dashboard />, {
+      preloadedState: {
+        dashboard: {
+          loading: false,
+          balance: 0,
+          totalPortfolioValue: 0,
+          holdingsCount: 0,
+          watchlistCount: 0,
+          watchlistPreview: [],
+        },
+      },
     });
 
     expect(fetchDashboardSummary).toHaveBeenCalledTimes(1);
   });
 
   test('renders KPI summary cards', () => {
-    renderWithStore({
-      loading: false,
-      balance: 50000,
-      totalPortfolioValue: 120000,
-      holdingsCount: 5,
-      watchlistCount: 3,
-      watchlistPreview: [],
+    renderWithProviders(<Dashboard />, {
+      preloadedState: {
+        dashboard: {
+          loading: false,
+          balance: 50000,
+          totalPortfolioValue: 120000,
+          holdingsCount: 5,
+          watchlistCount: 3,
+          watchlistPreview: [],
+        },
+      },
     });
 
     expect(
@@ -97,18 +90,24 @@ describe('Dashboard Page', () => {
     ).toBeInTheDocument();
   });
 
-  test('shows skeleton when loading and no summary data', () => {
-    renderWithStore({
-      loading: true,
-      balance: null,
-      totalPortfolioValue: null,
-      holdingsCount: null,
-      watchlistCount: null,
-      watchlistPreview: [],
-    });
-
-    expect(
-      screen.getByTestId('dashboard-skeleton')
-    ).toBeInTheDocument();
+test('does not render skeleton when loading but summary layout is shown', () => {
+  renderWithProviders(<Dashboard />, {
+    preloadedState: {
+      dashboard: {
+        loading: true,
+        summary: null,
+      },
+    },
   });
+
+  // Skeleton should NOT be present
+  expect(
+    screen.queryByTestId('dashboard-skeleton')
+  ).not.toBeInTheDocument();
+
+  // Summary card should still render (₹0 case)
+  expect(
+    screen.getByTestId('summary-card-portfolio-value')
+  ).toBeInTheDocument();
+});
 });

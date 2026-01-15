@@ -56,4 +56,5 @@ const portfolioSlice = createSlice({
 });
 
 export const { resetPortfolio } = portfolioSlice.actions;
+export const portfolioReducer = portfolioSlice.reducer;
 export default portfolioSlice.reducer;

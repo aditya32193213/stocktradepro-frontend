@@ -1,20 +1,51 @@
-import { render } from '@testing-library/react';
-import { TableSkeleton, CardSkeleton, DashboardSkeleton } from '@/components/common/SkeletonLoader';
+/**
+ * File: SkeletonLoader.test.jsx
+ * Purpose:
+ * - Unit tests for reusable skeleton loader components
+ *
+ * Coverage:
+ * - TableSkeleton rendering
+ * - CardSkeleton rendering
+ * - DashboardSkeleton rendering
+ * - StockDetailSkeleton rendering
+ *
+ * Testing Strategy:
+ * - Ensures components render without crashing
+ * - Avoids brittle DOM or style assertions
+ */
 
-describe('Skeleton Loaders', () => {
-  test('TableSkeleton renders without crashing', () => {
+import { render } from '@testing-library/react';
+import {
+  TableSkeleton,
+  CardSkeleton,
+  DashboardSkeleton,
+  StockDetailSkeleton,
+} from '@/components';
+
+describe('Skeleton Loader Components', () => {
+  test('TableSkeleton renders a table structure', () => {
     const { container } = render(<TableSkeleton rows={3} />);
     expect(container.querySelector('table')).toBeInTheDocument();
   });
 
-  test('CardSkeleton renders', () => {
+  test('CardSkeleton renders animated placeholder', () => {
     const { container } = render(<CardSkeleton />);
-    // ✅ FIX: Check if ANY child has animate-pulse, not just the root
-    expect(container.querySelector('.animate-pulse')).toBeInTheDocument();
+    expect(
+      container.querySelector('.animate-pulse')
+    ).toBeInTheDocument();
   });
 
-  test('DashboardSkeleton renders', () => {
+  test('DashboardSkeleton renders animated placeholders', () => {
     const { container } = render(<DashboardSkeleton />);
-    expect(container.querySelector('.animate-pulse')).toBeInTheDocument();
+    expect(
+      container.querySelector('.animate-pulse')
+    ).toBeInTheDocument();
+  });
+
+  test('StockDetailSkeleton renders without crashing', () => {
+    const { container } = render(<StockDetailSkeleton />);
+    expect(
+      container.querySelector('.animate-pulse')
+    ).toBeInTheDocument();
   });
 });

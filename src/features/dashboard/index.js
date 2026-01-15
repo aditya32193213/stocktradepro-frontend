@@ -11,7 +11,7 @@
  * - Maintain consistent Redux feature boundaries
  */
 
-export { default } from './dashboardSlice';
+export { default as dashboardReducer } from './dashboardSlice';
 export * from './dashboardSlice';
 export * from './dashboardThunks';
 export * from './dashboardSelectors';

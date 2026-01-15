@@ -57,4 +57,5 @@ const dashboardSlice = createSlice({
 });
 
 export const { resetDashboard } = dashboardSlice.actions;
+export const dashboardReducer = dashboardSlice.reducer;
 export default dashboardSlice.reducer;

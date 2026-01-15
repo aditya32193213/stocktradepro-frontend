@@ -1,86 +1,143 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import { configureStore } from '@reduxjs/toolkit';
-import StockMarket from '@/pages/StockMarket';
-import stocksReducer from '@/features/stocks/stocksSlice';
-import { vi } from 'vitest';
+/**
+ * File: StockMarket.test.jsx
+ * Purpose:
+ * - Unit tests for StockMarket page
+ *
+ * Coverage:
+ * - Search and filter UI
+ * - Stock list rendering
+ * - Infinite scroll wrapper
+ * - Navigation on stock row click
+ *
+ * Testing Strategy:
+ * - Uses real Redux slice
+ * - Mocks InfiniteScroll and navigation
+ * - Tests user-visible behavior only
+ */
 
-vi.mock('react-infinite-scroll-component', () => ({
-  default: ({ children }) => <div data-testid="infinite-scroll">{children}</div>,
+import { screen, fireEvent } from "@testing-library/react";
+import { render } from "@testing-library/react";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import { configureStore } from "@reduxjs/toolkit";
+import { vi } from "vitest";
+
+import StockMarket from "@/pages/StockMarket";
+import { stocksReducer } from "@/features";
+
+// ---------------- MOCKS ----------------
+
+// Infinite scroll mock
+vi.mock("react-infinite-scroll-component", () => ({
+  default: ({ children }) => (
+    <div data-testid="infinite-scroll">{children}</div>
+  ),
 }));
 
-vi.mock('@/components', () => ({
-  StockLogo: () => <div>Logo</div>
+// StockLogo & Skeleton mock
+vi.mock("@/components", () => ({
+  StockLogo: () => <div>Logo</div>,
+  TableSkeleton: () => <div>TableSkeleton</div>,
 }));
 
-const renderWithProviders = (ui, { preloadedState = {} } = {}) => {
+// Navigation mock
+const mockNavigate = vi.fn();
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual("react-router-dom");
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+  };
+});
+
+// ---------------- HELPER ----------------
+const renderStockMarket = (preloadedState) => {
   const store = configureStore({
-    reducer: { stocks: stocksReducer },
+    reducer: {
+      stocks: stocksReducer,
+    },
     preloadedState,
   });
+
   return render(
     <Provider store={store}>
-      <BrowserRouter>{ui}</BrowserRouter>
+      <BrowserRouter>
+        <StockMarket />
+      </BrowserRouter>
     </Provider>
   );
 };
 
-describe('StockMarket Page', () => {
-  const mockStocksState = {
+// ---------------- TESTS ----------------
+describe("StockMarket Page", () => {
+  const mockState = {
     stocks: {
       list: [
-        { 
-          _id: '1', 
-          symbol: 'RELIANCE', 
-          companyName: 'Reliance Industries', 
-          price: 2500, 
-          change: 50, 
-          changePercent: 2.5, 
+        {
+          _id: "1",
+          symbol: "RELIANCE",
+          companyName: "Reliance Industries",
+          price: 2500,
+          changePercent: 2.5,
           volume: 100000,
-          sector: 'Energy'
+          sector: "Energy",
         },
-        { 
-          _id: '2', 
-          symbol: 'TCS', 
-          companyName: 'Tata Consultancy', 
-          price: 3200, 
-          change: -20, 
-          changePercent: -0.8, 
+        {
+          _id: "2",
+          symbol: "TCS",
+          companyName: "Tata Consultancy",
+          price: 3200,
+          changePercent: -0.8,
           volume: 50000,
-          sector: 'IT'
-        }
+          sector: "IT",
+        },
       ],
       loading: false,
       error: null,
       page: 1,
       totalPages: 5,
-      sectors: ['IT', 'Finance']
-    }
+      totalRecords: 2,
+      sectors: ["IT", "Energy"],
+    },
   };
 
-  test('renders the search bar and filter', () => {
-    renderWithProviders(<StockMarket />, { preloadedState: mockStocksState });
-    
-    // Updated placeholder text matcher
-    expect(screen.getByPlaceholderText(/search by symbol or company name/i)).toBeInTheDocument();
-    expect(screen.getAllByText(/all sectors/i)[0]).toBeInTheDocument();
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
-  test('renders the stock list correctly', () => {
-    renderWithProviders(<StockMarket />, { preloadedState: mockStocksState });
-    
-    expect(screen.getByText('RELIANCE')).toBeInTheDocument();
-    expect(screen.getByText('TCS')).toBeInTheDocument();
-    expect(screen.getByText(/2,500/)).toBeInTheDocument();
+  test("renders search bar and sector filter", () => {
+    renderStockMarket(mockState);
+
+    expect(
+      screen.getByPlaceholderText(/search by symbol or company name/i)
+    ).toBeInTheDocument();
+
+    expect(screen.getByText(/all sectors/i)).toBeInTheDocument();
   });
 
-  test('updates search input value when typing', () => {
-    renderWithProviders(<StockMarket />, { preloadedState: mockStocksState });
-    
-    const searchInput = screen.getByPlaceholderText(/search by symbol or company name/i);
-    fireEvent.change(searchInput, { target: { value: 'Adani' } });
-    
-    expect(searchInput.value).toBe('Adani');
+  test("renders stock list inside infinite scroll", () => {
+    renderStockMarket(mockState);
+
+    expect(screen.getByTestId("infinite-scroll")).toBeInTheDocument();
+    expect(screen.getByText("RELIANCE")).toBeInTheDocument();
+    expect(screen.getByText("TCS")).toBeInTheDocument();
+  });
+
+  test("updates search input value when typing", () => {
+    renderStockMarket(mockState);
+
+    const searchInput = screen.getByPlaceholderText(
+      /search by symbol or company name/i
+    );
+
+    fireEvent.change(searchInput, { target: { value: "Adani" } });
+    expect(searchInput.value).toBe("Adani");
+  });
+
+  test("navigates to stock detail page on row click", () => {
+    renderStockMarket(mockState);
+
+    fireEvent.click(screen.getByTestId("stock-row-1"));
+    expect(mockNavigate).toHaveBeenCalledWith("/stocks/1");
   });
 });

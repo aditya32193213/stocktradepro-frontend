@@ -1,13 +1,24 @@
-import { render } from '@testing-library/react';
-import ToastProvider from '@/components/common/ToastProvider';
-import { Toaster } from 'react-hot-toast';
+/**
+ * File: ToastProvider.test.jsx
+ * Purpose:
+ * - Unit test for ToastProvider component
+ *
+ * Coverage:
+ * - Ensures the provider renders without crashing
+ *
+ * Testing Strategy:
+ * - Does not test react-hot-toast internals
+ * - Verifies integration-level stability only
+ */
 
-// We just want to ensure it renders the library component
-describe('ToastProvider', () => {
-  test('renders Toaster component', () => {
-    // Since Toaster renders a div with specific styles/ids usually at the root
-    // We verify it doesn't crash the test runner.
-    const { container } = render(<ToastProvider />);
-    expect(container).toBeTruthy();
+import { renderWithProviders } from "./testRender";
+import { ToastProvider } from '@/components';
+
+describe('ToastProvider Component', () => {
+  test('renders toast provider without crashing', () => {
+    const { container } = renderWithProviders(<ToastProvider />);
+
+    // If rendering succeeds, container should exist
+    expect(container).toBeInTheDocument();
   });
 });

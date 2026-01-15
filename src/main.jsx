@@ -30,8 +30,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Provider store={store}>
       <BrowserRouter>
         <ThemeProvider>
-          <ToastProvider />
+          <ToastProvider>
           <App />
+          </ToastProvider>
         </ThemeProvider>
       </BrowserRouter>
     </Provider>
