@@ -87,6 +87,12 @@ StockTradePro is a comprehensive stock trading platform that provides real-time 
 
 ---
 
+# 🌐🚀 Live Deployment
+- 🔗 Frontend Deployment
+👉**[https://stocktradepro-frontend.vercel.app/](https://stocktradepro-frontend.vercel.app/)**
+
+---
+
 ## 🛠️ Tech Stack
 
 ### **Core Technologies**
