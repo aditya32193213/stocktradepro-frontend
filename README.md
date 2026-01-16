@@ -231,7 +231,7 @@ Transaction history displaying all buy and sell records with detailed trade info
 
 ### ❓ FAQ Page
 - Frequently Asked Questions section implemented using an accordion layout for improved user experience.
-![FAQ Page ](screenshots/10-FAQ.png)
+![FAQ Page ](screenshots/10-faq.png)
 
 ### 🧾 Export Transactions (PDF)
 - Exported transaction history in PDF format, allowing users to download and retain their trade records.
