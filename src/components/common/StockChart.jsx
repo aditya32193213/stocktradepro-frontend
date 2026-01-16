@@ -34,7 +34,7 @@ export default function StockChart({ data, color }) {
   return (
     <div className="h-80 bg-white dark:bg-gray-900 p-4 rounded-lg border border-gray-200 dark:border-gray-800">
       <h3 className="text-sm font-semibold text-gray-500 mb-4">Price Trend (Live)</h3>
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height={300}>
         <AreaChart data={chartData}>
           <defs>
             <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">

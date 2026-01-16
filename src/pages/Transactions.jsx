@@ -177,6 +177,8 @@ export default function Transactions() {
               <div className="relative flex-1 max-w-md group">
                 <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-500 transition-colors" />
                 <input
+                  id="transaction-search"
+                  name="transactionSearch"
                   type="text"
                   placeholder="Search by stock symbol..."
                   value={search}

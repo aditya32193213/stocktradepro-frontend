@@ -612,6 +612,14 @@ npm run dev
 
 ---
 
+### Known Browser Warning
+
+The application loads stock logos as external SVGs from the Simple Icons CDN.
+Modern browsers may log CORB (Cross-Origin Read Blocking) warnings for these SVGs.
+This is expected browser behavior and does not affect functionality or security.
+
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

@@ -234,12 +234,15 @@ export default function Profile() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Name Field */}
                     <div className="md:col-span-2">
-                      <label className="text-sm font-black text-gray-700 dark:text-gray-300 flex items-center gap-2 mb-3 uppercase tracking-wider">
+                      <label htmlFor="profile-name" className="text-sm font-black text-gray-700 dark:text-gray-300 flex items-center gap-2 mb-3 uppercase tracking-wider">
                         <FaUser className="text-blue-500" />
                         Full Name
                       </label>
                       <input
+                        id="profile-name"
+                        name="name"
                         type="text"
+                        autoComplete="name"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         className="w-full rounded-xl border-2 border-gray-300 dark:border-gray-700
@@ -252,12 +255,15 @@ export default function Profile() {
 
                     {/* Mobile Field */}
                     <div className="md:col-span-2">
-                      <label className="text-sm font-black text-gray-700 dark:text-gray-300 flex items-center gap-2 mb-3 uppercase tracking-wider">
+                      <label htmlFor="profile-mobile" className="text-sm font-black text-gray-700 dark:text-gray-300 flex items-center gap-2 mb-3 uppercase tracking-wider">
                         <FaPhone className="text-blue-500" />
                         Mobile Number
                       </label>
                       <input
+                        id="profile-mobile"
+                        name="mobile"
                         type="text"
+                        autoComplete="tel"
                         value={formData.mobile}
                         onChange={(e) => {
                           const value = e.target.value.replace(/\D/g, '');
@@ -279,12 +285,15 @@ export default function Profile() {
 
                     {/* Read-only Email */}
                     <div>
-                      <label className="text-sm font-black text-gray-500 dark:text-gray-400 flex items-center gap-2 mb-3 uppercase tracking-wider">
+                      <label htmlFor="profile-email" className="text-sm font-black text-gray-500 dark:text-gray-400 flex items-center gap-2 mb-3 uppercase tracking-wider">
                         <FaEnvelope className="text-gray-400" />
                         Email (Cannot be changed)
                       </label>
                       <input
+                        id="profile-email"
+                        name="email"
                         type="text"
+                        autoComplete="email"
                         value={profileData?.email}
                         disabled
                         className="w-full rounded-xl border-2 border-gray-200 dark:border-gray-800
@@ -295,12 +304,15 @@ export default function Profile() {
 
                     {/* Read-only PAN */}
                     <div>
-                      <label className="text-sm font-black text-gray-500 dark:text-gray-400 flex items-center gap-2 mb-3 uppercase tracking-wider">
+                      <label htmlFor="profile-pan" className="text-sm font-black text-gray-500 dark:text-gray-400 flex items-center gap-2 mb-3 uppercase tracking-wider">
                         <FaIdCard className="text-gray-400" />
                         PAN (Cannot be changed)
                       </label>
                       <input
+                        id="profile-pan"
+                        name="pan"
                         type="text"
+                        autoComplete="off"
                         value={profileData?.pan}
                         disabled
                         className="w-full rounded-xl border-2 border-gray-200 dark:border-gray-800

@@ -187,7 +187,7 @@ export default function Login() {
                 
                 {/* Email Field */}
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1 uppercase tracking-wider">
+                  <label htmlFor="login-email" className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1 uppercase tracking-wider">
                     Email Address
                   </label>
                   <div className="relative group/input">
@@ -195,6 +195,8 @@ export default function Login() {
                       <FaEnvelope className="text-gray-400 group-focus-within/input:text-blue-500 transition-colors duration-300" />
                     </div>
                     <input
+                      id="login-email"
+                      type="email"
                       {...register("email")}
                       className="block w-full pl-12 pr-4 py-4 rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50 text-gray-900 dark:text-white placeholder-gray-400 focus:bg-white dark:focus:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 text-base font-medium shadow-sm hover:border-gray-300 dark:hover:border-gray-600"
                       placeholder="john@example.com"
@@ -212,7 +214,7 @@ export default function Login() {
                 {/* Password Field */}
                 <div className="space-y-2">
                   <div className="flex justify-between items-center ml-1">
-                    <label className="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <label htmlFor="login-password" className="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       Password
                     </label>
                     <Link 
@@ -227,6 +229,7 @@ export default function Login() {
                       <FaLock className="text-gray-400 group-focus-within/input:text-blue-500 transition-colors duration-300" />
                     </div>
                     <input
+                      id="login-password"
                       type={showPassword ? "text" : "password"}
                       {...register("password")}
                       className="block w-full pl-12 pr-12 py-4 rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50 text-gray-900 dark:text-white placeholder-gray-400 focus:bg-white dark:focus:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 text-base font-medium shadow-sm hover:border-gray-300 dark:hover:border-gray-600"

@@ -152,7 +152,7 @@ export default function Register() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Full Name */}
               <div className="space-y-2 group">
-                <label className="text-xs font-bold uppercase text-gray-600 dark:text-gray-400 tracking-wider ml-1 flex items-center gap-2">
+                <label htmlFor="register-name" className="text-xs font-bold uppercase text-gray-600 dark:text-gray-400 tracking-wider ml-1 flex items-center gap-2">
                   <FaUser className="w-3 h-3" />
                   Full Name
                 </label>
@@ -161,6 +161,9 @@ export default function Register() {
                     <FaUser className="w-4 h-4" />
                   </div>
                   <input
+                    id="register-name"
+                    type="text"
+                    autoComplete="name"
                     {...register("name")}
                     onFocus={() => setFocusedField('name')}
                     onBlur={() => setFocusedField(null)}
@@ -183,7 +186,7 @@ export default function Register() {
 
               {/* Email */}
               <div className="space-y-2 group">
-                <label className="text-xs font-bold uppercase text-gray-600 dark:text-gray-400 tracking-wider ml-1 flex items-center gap-2">
+                <label htmlFor="register-email" className="text-xs font-bold uppercase text-gray-600 dark:text-gray-400 tracking-wider ml-1 flex items-center gap-2">
                   <FaEnvelope className="w-3 h-3" />
                   Email Address
                 </label>
@@ -192,6 +195,9 @@ export default function Register() {
                     <FaEnvelope className="w-4 h-4" />
                   </div>
                   <input
+                    id="register-email"
+                    type="email"
+                    autoComplete="email"
                     {...register("email")}
                     onFocus={() => setFocusedField('email')}
                     onBlur={() => setFocusedField(null)}
@@ -217,7 +223,7 @@ export default function Register() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Mobile */}
               <div className="space-y-2 group">
-                <label className="text-xs font-bold uppercase text-gray-600 dark:text-gray-400 tracking-wider ml-1 flex items-center gap-2">
+                <label htmlFor="register-mobile" className="text-xs font-bold uppercase text-gray-600 dark:text-gray-400 tracking-wider ml-1 flex items-center gap-2">
                   <FaPhone className="w-3 h-3" />
                   Mobile Number
                 </label>
@@ -226,6 +232,9 @@ export default function Register() {
                     <FaPhone className="w-4 h-4" />
                   </div>
                   <input
+                    id="register-mobile"
+                    type="tel"
+                    autoComplete="tel"
                     {...register("mobile")}
                     onFocus={() => setFocusedField('mobile')}
                     onBlur={() => setFocusedField(null)}
@@ -248,7 +257,7 @@ export default function Register() {
 
               {/* PAN */}
               <div className="space-y-2 group">
-                <label className="text-xs font-bold uppercase text-gray-600 dark:text-gray-400 tracking-wider ml-1 flex items-center gap-2">
+                <label htmlFor="register-pan" className="text-xs font-bold uppercase text-gray-600 dark:text-gray-400 tracking-wider ml-1 flex items-center gap-2">
                   <FaIdCard className="w-3 h-3" />
                   PAN Card
                 </label>
@@ -257,6 +266,9 @@ export default function Register() {
                     <FaIdCard className="w-4 h-4" />
                   </div>
                   <input
+                    id="register-pan"
+                    type="text"
+                    autoComplete="off"
                     {...register("pan")}
                     onFocus={() => setFocusedField('pan')}
                     onBlur={() => setFocusedField(null)}
@@ -280,7 +292,7 @@ export default function Register() {
 
             {/* Row 3: Password */}
             <div className="space-y-2 group">
-              <label className="text-xs font-bold uppercase text-gray-600 dark:text-gray-400 tracking-wider ml-1 flex items-center gap-2">
+              <label htmlFor="register-password" className="text-xs font-bold uppercase text-gray-600 dark:text-gray-400 tracking-wider ml-1 flex items-center gap-2">
                 <FaLock className="w-3 h-3" />
                 Password
               </label>
@@ -289,6 +301,8 @@ export default function Register() {
                   <FaLock className="w-4 h-4" />
                 </div>
                 <input
+                  id="register-password"
+                  autoComplete="new-password"
                   type={showPassword ? "text" : "password"}
                   {...register("password")}
                   onFocus={() => setFocusedField('password')}
@@ -420,7 +434,7 @@ export default function Register() {
           {/* Social Auth */}
           <button
             type="button"
-            onClick={() => toast.error("Google Auth requires backend configuration (Coming Soon)")}
+            onClick={() => showError("Google Auth requires backend configuration (Coming Soon)")}
             className="group w-full flex items-center justify-center gap-3 rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 py-3.5 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-300 shadow-sm hover:shadow-md transform hover:-translate-y-0.5"
           >
             <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="h-5 w-5 group-hover:scale-110 transition-transform" alt="Google" />

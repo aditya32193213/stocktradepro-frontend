@@ -158,7 +158,9 @@ export default function FAQ() {
             <div className="relative flex items-center">
               <FaSearch className="absolute left-6 text-gray-400 group-focus-within:text-blue-600 transition-colors duration-200 z-10" size={20} />
               <input 
-                type="text" 
+                id="faq-search"
+                name="faq-search"
+                type="search" 
                 placeholder="Search for answers..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}

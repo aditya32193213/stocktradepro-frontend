@@ -1,35 +1,29 @@
-/**
- * File: StockLogo.jsx
- * Purpose:
- * - Displays stock logo with graceful fallback
- *
- * Flow:
- * - Renders image if available
- * - Falls back to symbol-based avatar on error
- * - Ensures visibility in dark mode
- *
- * Key Responsibilities:
- * - Branding consistency
- * - Robust image handling
- */
+// /**
+//  * File: StockLogo.jsx
+//  * Purpose:
+//  * - Displays stock logo with graceful fallback
+//  *
+//  * Flow:
+//  * - Renders image if available
+//  * - Falls back to symbol-based avatar on error
+//  * - Ensures visibility in dark mode
+//  *
+//  * Key Responsibilities:
+//  * - Branding consistency
+//  * - Robust image handling
+//  */
 
 import { useState } from "react";
 
-/**
- * StockLogo Component
- * Displays stock logo with white background for dark mode
- * Includes fallback for missing/broken images
- */
-export default function StockLogo({ 
-  src, 
-  alt, 
-  symbol, 
+export default function StockLogo({
+  src,
+  alt,
+  symbol,
   size = "md",
-  className = "" 
+  className = "",
 }) {
-  const [error, setError] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
-  // Size configurations
   const sizeClasses = {
     xs: "w-6 h-6 text-xs",
     sm: "w-8 h-8 text-sm",
@@ -38,15 +32,10 @@ export default function StockLogo({
     xl: "w-16 h-16 text-xl",
   };
 
-  const handleError = () => {
-    setError(true);
-  };
-
-  // Fallback: Show first letter of symbol in colored circle
-  if (!src || error) {
+  // ✅ FALLBACK AVATAR
+  if (!src || hasError) {
     const firstLetter = symbol ? symbol.charAt(0).toUpperCase() : "?";
-    
-    // Generate consistent color based on symbol
+
     const colors = [
       "bg-blue-500",
       "bg-green-500",
@@ -57,14 +46,14 @@ export default function StockLogo({
       "bg-indigo-500",
       "bg-teal-500",
     ];
-    
-    const colorIndex = symbol 
-      ? symbol.charCodeAt(0) % colors.length 
+
+    const colorIndex = symbol
+      ? symbol.charCodeAt(0) % colors.length
       : 0;
-    
+
     return (
       <div
-        className={`${sizeClasses[size]} rounded-full ${colors[colorIndex]} 
+        className={`${sizeClasses[size]} rounded-full ${colors[colorIndex]}
                     flex items-center justify-center text-white font-bold
                     ${className}`}
         title={alt || symbol}
@@ -74,10 +63,10 @@ export default function StockLogo({
     );
   }
 
-  // Show actual logo with white background
+  // ✅ LOGO RENDER
   return (
     <div
-      className={`${sizeClasses[size]} rounded-full bg-white 
+      className={`${sizeClasses[size]} rounded-full bg-white
                   flex items-center justify-center overflow-hidden
                   border border-gray-200 dark:border-gray-700
                   ${className}`}
@@ -87,7 +76,8 @@ export default function StockLogo({
         src={src}
         alt={alt || symbol}
         className="w-full h-full object-cover"
-        onError={handleError}
+        loading="lazy"
+        onError={() => setHasError(true)}
       />
     </div>
   );

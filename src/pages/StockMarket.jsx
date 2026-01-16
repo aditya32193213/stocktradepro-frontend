@@ -201,6 +201,8 @@ export default function StockMarket() {
                 <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-white/60 group-focus-within:text-white transition-colors z-10" />
                 <input 
                   type="text" 
+                  id="stock-search"
+                  name="stockSearch"
                   placeholder="Search by symbol or company name..." 
                   value={search} 
                   onChange={(e) => setSearch(e.target.value)} 
@@ -220,6 +222,8 @@ export default function StockMarket() {
               <div className="relative lg:w-72">
                 <FaFilter className="absolute left-4 top-1/2 -translate-y-1/2 text-white/60 z-10" size={14} />
                 <select 
+                  id="sector-filter"
+                  name="sector"
                   value={sector} 
                   onChange={(e) => setSector(e.target.value)} 
                   className="w-full pl-12 pr-10 py-3.5 rounded-xl border border-white/30 bg-white/10 backdrop-blur-md text-white focus:ring-2 focus:ring-white/50 focus:border-white/50 outline-none appearance-none cursor-pointer shadow-lg font-medium"

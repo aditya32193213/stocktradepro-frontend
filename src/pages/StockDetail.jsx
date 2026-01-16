@@ -100,7 +100,7 @@ export default function StockDetail() {
 
   const handleAddToWatchlist = async () => {
     if (!stock) return;
-    const toastId = toast.loading("Adding to watchlist...");
+    const toastId = showLoading("Adding to watchlist...");
     const result = await dispatch(addToWatchlist(stock._id));
     dismissToast(toastId);
     
@@ -279,11 +279,14 @@ export default function StockDetail() {
                 <form onSubmit={handleTrade} className="space-y-5">
                   {/* Quantity Input */}
                   <div className="group">
-                    <label className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">
+                    <label htmlFor="trade-quantity" className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">
                       Quantity
                     </label>
                     <div className="relative">
                       <input 
+                        id="trade-quantity"
+                        name="quantity"
+                        autoComplete="off"
                         type="number" 
                         min="1" 
                         value={quantity} 
@@ -299,10 +302,13 @@ export default function StockDetail() {
 
                   {/* Notes Input */}
                   <div className="group">
-                    <label className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">
+                    <label htmlFor="trade-notes" className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">
                       Notes <span className="text-gray-400 font-normal">(Optional)</span>
                     </label>
                     <textarea 
+                      id="trade-notes"
+                      name="notes"
+                      autoComplete="off"
                       value={notes} 
                       onChange={(e) => setNotes(e.target.value)} 
                       className="w-full p-4 rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 resize-none" 

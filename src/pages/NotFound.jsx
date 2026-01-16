@@ -145,6 +145,9 @@ export default function NotFound() {
             <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
             <div className="relative">
               <input
+                id="notfound-search"
+                name="notfoundSearch"
+                autoComplete="off"
                 type="text"
                 placeholder="Search for pages..."
                 className="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl text-sm sm:text-base text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-sm transition-all"
