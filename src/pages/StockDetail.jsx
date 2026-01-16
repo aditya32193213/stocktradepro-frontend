@@ -346,7 +346,7 @@ export default function StockDetail() {
                         Processing...
                       </span>
                     ) : (
-                      `${type} ${stock.symbol}`
+                      `${type}`
                     )}
                   </button>
                 </form>
