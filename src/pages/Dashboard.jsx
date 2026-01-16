@@ -27,11 +27,11 @@ import { StockLogo ,DashboardSkeleton} from "@/components";
 import { showSuccess, showError, showLoading, dismissToast } from "@/utils";
 
 export default function Dashboard() {
- const dispatch = useAppDispatch(); // ✅ Updated
+ const dispatch = useAppDispatch(); 
   const navigate = useNavigate();
   
-  const summary = useAppSelector(selectDashboardSummary); // ✅ Updated
-  const loading = useAppSelector(selectDashboardLoading); // ✅ Updated
+  const summary = useAppSelector(selectDashboardSummary); 
+  const loading = useAppSelector(selectDashboardLoading);
 
   useEffect(() => {
     dispatch(fetchDashboardSummary());
@@ -94,7 +94,7 @@ export default function Dashboard() {
                 <span className="text-xs font-bold text-white uppercase tracking-wider">Live Dashboard</span>
               </div>
               <h1 className="text-4xl lg:text-5xl font-black tracking-tight text-white mb-3 drop-shadow-lg">
-                Portfolio Overview
+                Dashboard Overview
               </h1>
               <p className="text-blue-100 text-sm lg:text-base font-medium max-w-2xl leading-relaxed">
                 Track your investments in real-time with comprehensive market insights and portfolio analytics.

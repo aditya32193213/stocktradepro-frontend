@@ -32,7 +32,6 @@ export default function StockLogo({
     xl: "w-16 h-16 text-xl",
   };
 
-  // ✅ FALLBACK AVATAR
   if (!src || hasError) {
     const firstLetter = symbol ? symbol.charAt(0).toUpperCase() : "?";
 
@@ -63,7 +62,6 @@ export default function StockLogo({
     );
   }
 
-  // ✅ LOGO RENDER
   return (
     <div
       className={`${sizeClasses[size]} rounded-full bg-white

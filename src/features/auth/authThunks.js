@@ -109,7 +109,6 @@ export const updateUserProfile = createAsyncThunk(
 export const logoutUser = createAsyncThunk(
   'auth/logoutUser',
   async (_, { dispatch }) => {
-    // ✅ FIX: Remove token and user data immediately
     localStorage.removeItem('token');
     localStorage.removeItem('user');
 

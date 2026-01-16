@@ -18,7 +18,7 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import {
-  FaHome, FaChartLine, FaStar, FaExchangeAlt, FaBriefcase, FaUser, FaInfoCircle,
+  FaHome, FaChartLine, FaStar, FaExchangeAlt, FaBriefcase, FaInfoCircle,
   FaChevronLeft, FaChevronRight, FaQuestionCircle
 } from "react-icons/fa";
 import clsx from "clsx";
@@ -44,7 +44,7 @@ const Sidebar = () => {
         collapsed ? "w-20" : "w-64"
       )}
     >
-      {/* Decorative gradient overlay */}
+      
       <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-purple-500/5 to-pink-500/5 dark:from-blue-500/10 dark:via-purple-500/10 dark:to-pink-500/10 pointer-events-none"></div>
       
       <div className="relative flex-1 flex flex-col">

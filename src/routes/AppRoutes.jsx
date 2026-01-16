@@ -63,7 +63,7 @@ export default function AppRoutes() {
           <Route path="/faq" element={<FAQ />} />
           <Route path="*" element={<NotFound />} />
 
-          {/* ✅ WRAP LOGIN & REGISTER IN GUEST ROUTE */}
+          {/* LOGIN & REGISTER IN GUEST ROUTE */}
           <Route element={<GuestRoute />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
