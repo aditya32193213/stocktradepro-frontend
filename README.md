@@ -187,6 +187,58 @@ frontend/
 
 ---
 
+## 📸 Screenshots
+
+- The following screenshots demonstrate the complete user and admin workflows of the Shopnetic E-commerce application, covering authentication, product browsing, checkout, order management, invoice downloads, and admin analytics.
+
+## 👤 User Flow Screenshots
+
+### 🏠 Home (Landing) Page
+- The landing page introduces StockTradePro with navigation, market overview, trending stocks, and quick access to authentication pages.
+![Homepage ](screenshots/01-landing.png)
+
+### 📝 Register Page
+- User registration page with PAN, email, mobile number, and password validation to ensure secure account creation.
+![Register Page](screenshots/02-register.png)
+
+### 🔐 Login Page
+- Login interface allowing registered users to securely authenticate and access their trading dashboard.
+![Login Page](screenshots/03-login.png)
+
+### 📊 User Dashboard
+- Dashboard displaying user portfolio summary, available balance, market overview, and watchlist for quick monitoring.
+![Dashboard](screenshots/04-user-cart.png)
+
+### 📈 Stock Market Page
+- Stock market listing page showing all available stocks with search, sector filtering, and pagination.
+![Stock Market Page](screenshots/05-stock-market.png)
+
+### 📉 Stock Detail Page
+- Detailed stock view with price chart, company information, buy/sell actions, and add-to-watchlist functionality.
+![Stock Detail Page](screenshots/06-stock-detail.png)
+
+### 💼 Transaction History Page
+Transaction history displaying all buy and sell records with detailed trade information.
+![Transactions Page](screenshots/07-transaction.png)
+
+### 💰 Portfolio Page
+- Portfolio page showing current holdings, invested value, and real-time simulated market valuation.
+![Portfolio Page](screenshots/08-portfolio.png)
+
+### ℹ️ About Page
+- About page describing the StockTradePro platform, its purpose, and overall vision.
+![About Page ](screenshots/09-about.png)
+
+### ❓ FAQ Page
+- Frequently Asked Questions section implemented using an accordion layout for improved user experience.
+![FAQ Page ](screenshots/10-FAQ.png)
+
+### 🧾 Export Transactions (PDF)
+- Exported transaction history in PDF format, allowing users to download and retain their trade records.
+![PDF File ](screenshots/11-export-pdf.png)
+
+---
+
 ## 🚀 Getting Started
 
 ### **Prerequisites**
@@ -469,7 +521,14 @@ const handleTrade = async () => {
 
 ---
 
-## 🧪 Testing
+## 🧪 Frontend Testing
+
+To ensure a reliable, bug-free, and maintainable frontend, StockTradePro uses modern testing tools focused on component behavior and user interactions.
+
+- ⚙️ Testing Stack
+- ⚡ Vitest – Fast, Vite-native test runner
+- 🧩 React Testing Library – Component testing from the user’s perspective
+- 🧠 jsdom – Browser-like environment for DOM testing
 
 ```bash
 # Run unit tests (if configured)
