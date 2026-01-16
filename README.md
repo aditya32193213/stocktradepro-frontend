@@ -207,7 +207,7 @@ frontend/
 
 ### 📊 User Dashboard
 - Dashboard displaying user portfolio summary, available balance, market overview, and watchlist for quick monitoring.
-![Dashboard](screenshots/04-user-cart.png)
+![Dashboard](screenshots/04-dashboard.png)
 
 ### 📈 Stock Market Page
 - Stock market listing page showing all available stocks with search, sector filtering, and pagination.
