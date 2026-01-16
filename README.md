@@ -245,6 +245,11 @@ Transaction history displaying all buy and sell records with detailed trade info
 
 ---
 
+### ✨ Ongoing Enhancement
+- Login and Signup using Google OAuth 2.0
+- Forgot Password Recovery Feature
+- Wallet Topup Feature using Stripe Payment APIs
+
 ## 🚀 Getting Started
 
 ### **Prerequisites**
@@ -718,7 +723,7 @@ If you found this project helpful, please give it a ⭐ on GitHub!
 
 <div align="center">
 
-**Made with ❤️ using React, Redux, and Tailwind CSS**
+**Made with ❤️ using Vite, React, Redux, and Tailwind CSS**
 
 [⬆ Back to Top](#-stocktradepro---frontend)
 
